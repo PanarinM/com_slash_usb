@@ -62,7 +62,7 @@ def positioning_count():
     try:
         count = int(''.join(list(reversed(count))))
     except ValueError:
-        count = ''.join(list(reversed(count)))
+        count = float(''.join(list(reversed(count))))
     time = datetime.now()
     time = time.strftime('%d-%m-%Y %H:%M:%S')
     print(output_str.format(count, time))
@@ -83,7 +83,6 @@ except IndexError:
 device.open()
 
 
-target_usage = hid.get_full_usage_id(0x00, 0x3f)
 device.set_raw_data_handler(sample_handler_count)
 
 
