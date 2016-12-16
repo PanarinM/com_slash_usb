@@ -4,6 +4,33 @@ from msvcrt import kbhit
 from datetime import datetime
 
 
+class DeviceIsNotConnected(Exception):
+    pass
+
+
+class Menu(object):
+    @staticmethod
+    def init_menu():
+        user_input = input('To start the program press "1", "0" - exit: ')
+        if user_input == '1':
+            return
+        elif user_input == '0':
+            exit()
+        else:
+            Menu.init_menu()
+
+    @staticmethod
+    def reinit_menu():
+        user_input = input('Device was unplugged during execution, replug the device press "1" to continue '
+                           'or "0" to exit: ')
+        if user_input == '1':
+            return
+        elif user_input == '0':
+            exit()
+        else:
+            Menu.reinit_menu()
+
+
 class ut372device(object):
     def __init__(self):
         self.lst = []
@@ -80,23 +107,28 @@ class ut372device(object):
 
     def _send_init_packet(self):
         report = self.device.find_feature_reports()
-
         buffer = [0x00] * 6
         buffer[0] = 0x00
         buffer[1] = 0x60
         buffer[2] = 0x09
         buffer[5] = 0x03
-
         report[0].set_raw_data(buffer)
         report[0].send()
 
     def receive_package(self):
-        if ourdevice.device.is_plugged():
+        if self.device.is_plugged():
             sleep(0.3)
+        else:
+            raise DeviceIsNotConnected('Device was unplugged')
+
 
 if __name__ == '__main__':
+    Menu.init_menu()
     ourdevice = ut372device()
     ourdevice.connect()
     while True:
-        ourdevice.receive_package()
- 
+        try:
+            ourdevice.receive_package()
+        except DeviceIsNotConnected:
+            Menu.reinit_menu()
+            ourdevice.connect()
