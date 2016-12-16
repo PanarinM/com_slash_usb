@@ -47,6 +47,7 @@ def sample_handler_count(data):
 
 
 def positioning_count():
+    global marker
     global lst
     deciphered_raw = []
     for i in range(1, len(lst) - 6, 2):
@@ -58,7 +59,6 @@ def positioning_count():
             return
     output_str = 'count {} time {}'
     count = deciphered_raw[:5]
-    # count = int(''.join(list(reversed(count))))
     try:
         count = int(''.join(list(reversed(count))))
     except ValueError:
