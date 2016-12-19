@@ -117,7 +117,7 @@ class ut372device(object):
 
     def receive_package(self):
         if self.device.is_plugged():
-            sleep(0.3)
+            sleep(0.02)
         else:
             raise DeviceIsNotConnected('Device was unplugged')
 
