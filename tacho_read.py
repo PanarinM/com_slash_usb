@@ -34,6 +34,7 @@ class Menu(object):
 class ut372device(object):
     def __init__(self):
         self.lst = []
+        self.data = 0, 0, 0
         self.device = 'will further be overriden with device object'
         self.marker = False
         self.descriptor = {
@@ -67,7 +68,8 @@ class ut372device(object):
             if self.marker:
                 self.lst.append(chr(data[2]))
                 if len(self.lst) == 27:
-                    print(self._positioning_count())
+                    # print(self._positioning_count())
+                    self.data = self._positioning_count()
             if chr(data[2]) == '\n':
                 self.marker = True
 
@@ -80,15 +82,18 @@ class ut372device(object):
                 self.lst.clear()
                 self.marker = False
                 return
-        output_str = 'count {} time {}'
+        # output_str = '{} {} time {}'
         count = deciphered_raw[:5]
         try:
             count = int(''.join(list(reversed(count))))
+            type = 'count'
         except ValueError:
             count = float(''.join(list(reversed(count))))
+            type = 'rpm'
         time = datetime.now()
         time = time.strftime('%d-%m-%Y %H:%M:%S')
-        output = output_str.format(count, time)
+        # output = output_str.format(type,count, time)
+        output = type, count, time
         self.lst.clear()
         return output
 
@@ -118,6 +123,7 @@ class ut372device(object):
     def receive_package(self):
         if self.device.is_plugged():
             sleep(0.02)
+            return self.data
         else:
             raise DeviceIsNotConnected('Device was unplugged')
 
@@ -128,7 +134,11 @@ if __name__ == '__main__':
     ourdevice.connect()
     while True:
         try:
-            ourdevice.receive_package()
+            # print(ourdevice.receive_package())
+            type, count, time  = ourdevice.receive_package()
+            print('{} {} time {}'.format(type, count, time))
+
         except DeviceIsNotConnected:
             Menu.reinit_menu()
             ourdevice.connect()
+
