@@ -1,12 +1,12 @@
-import serial
+from serial import Serial, PARITY_EVEN, SerialException
 
 
 class we2107(object):
-    def __init__(self):
-        self.ser = serial.Serial()
+    def __init__(self, comnumb):
+        self.ser = Serial()
         self.ser.baudrate = 2400
-        self.ser.port = 'COM3'
-        self.ser.parity = serial.PARITY_EVEN
+        self.ser.port = 'COM{}'.format(comnumb)
+        self.ser.parity = PARITY_EVEN
         self.ser.stopbits = 1
         self.ser.open()
 
@@ -21,6 +21,11 @@ class we2107(object):
 
 
 if __name__ == '__main__':
-    device = we2107()
+    comnumb = input('Input COM port number: ')
+    try:
+        device = we2107(comnumb)
+    except SerialException:
+        print('Wrong COM port')
+        exit()
     while True:
         print(device.read_data())

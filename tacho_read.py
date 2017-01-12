@@ -8,27 +8,27 @@ class DeviceIsNotConnected(Exception):
     pass
 
 
-class Menu(object):
-    @staticmethod
-    def init_menu():
-        user_input = input('To start the program press "1", "0" - exit: ')
-        if user_input == '1':
-            return
-        elif user_input == '0':
-            exit()
-        else:
-            Menu.init_menu()
-
-    @staticmethod
-    def reinit_menu():
-        user_input = input('Device was unplugged during execution, replug the device press "1" to continue '
-                           'or "0" to exit: ')
-        if user_input == '1':
-            return
-        elif user_input == '0':
-            exit()
-        else:
-            Menu.reinit_menu()
+# class Menu(object):
+#     @staticmethod
+#     def init_menu():
+#         user_input = input('To start the program press "1", "0" - exit: ')
+#         if user_input == '1':
+#             return
+#         elif user_input == '0':
+#             exit()
+#         else:
+#             Menu.init_menu()
+#
+#     @staticmethod
+#     def reinit_menu():
+#         user_input = input('Device was unplugged during execution, replug the device press "1" to continue '
+#                            'or "0" to exit: ')
+#         if user_input == '1':
+#             return
+#         elif user_input == '0':
+#             exit()
+#         else:
+#             Menu.reinit_menu()
 
 
 class ut372device(object):
@@ -68,7 +68,6 @@ class ut372device(object):
             if self.marker:
                 self.lst.append(chr(data[2]))
                 if len(self.lst) == 27:
-                    # print(self._positioning_count())
                     self.data = self._positioning_count()
             if chr(data[2]) == '\n':
                 self.marker = True
@@ -92,7 +91,6 @@ class ut372device(object):
             type = 'rpm'
         time = datetime.now()
         time = time.strftime('%d-%m-%Y %H:%M:%S')
-        # output = output_str.format(type,count, time)
         output = type, count, time
         self.lst.clear()
         return output
@@ -129,16 +127,16 @@ class ut372device(object):
 
 
 if __name__ == '__main__':
-    Menu.init_menu()
-    ourdevice = ut372device()
-    ourdevice.connect()
-    while True:
-        try:
-            # print(ourdevice.receive_package())
-            type, count, time  = ourdevice.receive_package()
-            print('{} {} time {}'.format(type, count, time))
-
-        except DeviceIsNotConnected:
-            Menu.reinit_menu()
-            ourdevice.connect()
+    pass
+    # Menu.init_menu()
+    # ourdevice = ut372device()
+    # ourdevice.connect()
+    # while True:
+    #     try:
+    #         type, count, time  = ourdevice.receive_package()
+    #         print('{} {} time {}'.format(type, count, time))
+    #
+    #     except DeviceIsNotConnected:
+    #         Menu.reinit_menu()
+    #         ourdevice.connect()
 

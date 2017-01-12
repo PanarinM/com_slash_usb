@@ -1,11 +1,8 @@
-from sys import argv
 import pyodbc
 from os import path
 
 
-# noinspection SqlDialectInspection
 class AccessConnect:
-
     def __init__(self, database=r'C:\Users\Public\Documents\database.accdb', table=r'table'):
         self.database = database
         self.table = table
@@ -39,15 +36,7 @@ class AccessConnect:
 
 
 if __name__ == '__main__':
-    mypath = path.realpath('.')
-    a = AccessConnect(mypath+'\\'+'database.accdb', 'table')
-    # print(a.read_record('11/11/2011', ['jopa']))
-    # print(argv)
-    # record = [i for i in argv[1].split(';')]
-    # print(record)
-    a.add_record('12/12/2016', 'jopa', 11, 'lel')
-    # print(record)
-    # a.add_record()
-
-
-    # FIX ARGV ATO VOZVRAT HUYNYA
+    pass
+    # mypath = path.realpath('.')
+    # a = AccessConnect(mypath+'\\'+'database.accdb', 'table')
+    # a.add_record('12/12/2016', 'jopa', 11, 'lel')
