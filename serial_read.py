@@ -5,7 +5,7 @@ class we2107(object):
     def __init__(self, comnumb):
         self.ser = Serial()
         self.ser.baudrate = 2400
-        self.ser.port = 'COM{}'.format(comnumb)
+        self.ser.port = comnumb
         self.ser.parity = PARITY_EVEN
         self.ser.stopbits = 1
         self.ser.open()

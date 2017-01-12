@@ -1,6 +1,5 @@
 from time import sleep
 import pywinusb.hid as hid
-from msvcrt import kbhit
 from datetime import datetime
 
 
@@ -8,31 +7,10 @@ class DeviceIsNotConnected(Exception):
     pass
 
 
-# class Menu(object):
-#     @staticmethod
-#     def init_menu():
-#         user_input = input('To start the program press "1", "0" - exit: ')
-#         if user_input == '1':
-#             return
-#         elif user_input == '0':
-#             exit()
-#         else:
-#             Menu.init_menu()
-#
-#     @staticmethod
-#     def reinit_menu():
-#         user_input = input('Device was unplugged during execution, replug the device press "1" to continue '
-#                            'or "0" to exit: ')
-#         if user_input == '1':
-#             return
-#         elif user_input == '0':
-#             exit()
-#         else:
-#             Menu.reinit_menu()
-
-
 class ut372device(object):
-    def __init__(self):
+    def __init__(self, vendor_id=0x1a86, product_id=0xe008):
+        self.vendor_id = vendor_id
+        self.product_id = product_id
         self.lst = []
         self.data = 0, 0, 0
         self.device = 'will further be overriden with device object'
@@ -81,7 +59,6 @@ class ut372device(object):
                 self.lst.clear()
                 self.marker = False
                 return
-        # output_str = '{} {} time {}'
         count = deciphered_raw[:5]
         try:
             count = int(''.join(list(reversed(count))))
@@ -96,7 +73,7 @@ class ut372device(object):
         return output
 
     def connect(self):
-        devfilter = hid.HidDeviceFilter(vendor_id=0x1a86, product_id=0xe008)
+        devfilter = hid.HidDeviceFilter(vendor_id=self.vendor_id, product_id=self.product_id)
         hid_device = devfilter.get_devices()
 
         try:

@@ -1,5 +1,4 @@
 import pyodbc
-from os import path
 
 
 class AccessConnect:

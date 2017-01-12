@@ -1,11 +1,16 @@
 from serial_read import we2107
 from tacho_read import ut372device
 from tacho_acess_db import AccessConnect
+import serial.tools.list_ports
 from serial import SerialException
-from os import listdir
+from os import listdir, path
 
 
 def __db_choose():
+    """
+    Lists *.accdb Access database files in the project forlder. Then asks user to choose one
+    :return: String with path to the DB
+    """
     counter = 0
     dbfiles = []
     for file in listdir('.'):
@@ -13,25 +18,43 @@ def __db_choose():
             counter += 1
             print('{}. {}'.format(counter, file))
             dbfiles.append(file)
+    if counter == 0:
+        print('No Accsess DB files found')
+        exit()
     while True:
         userinput = int(input('Choose the DB file: '))
         if userinput > counter or userinput < 0:
             print('Wrong input!')
             continue
         else:
-            return '.\\{}'.format(dbfiles[userinput-1])
+            return path.realpath('.\\{}'.format(dbfiles[userinput-1]))
+
+
+def __comchoose():
+    comlist = serial.tools.list_ports.comports()
+    for com in comlist:
+        print('{}. {} {}'.format(comlist.index(com) + 1, com.device, com.description))
+    while True:
+        userinp = int(input('Input COM number: '))
+        if userinp > len(comlist) or userinp < 0:
+            print('Wrong input')
+            exit()
+        else:
+            return comlist[userinp-1].device
 
 
 if __name__ == "__main__":
-    comnumb = input('Input COM port number: ')
+    comnumb = str(__comchoose())
     pathtodb = __db_choose()
     tacho = ut372device()
+    print('Tachometer device was found by product ID = {} and vendor ID = {}'.format(tacho.product_id, tacho.vendor_id))
     try:
         pressure = we2107(comnumb)
     except SerialException:
         print('Wrong COM port')
         exit()
     tacho.connect()
+    print('------------------------------------------')
     while True:
         db = AccessConnect(pathtodb, 'table')
         tacho_data = tacho.receive_package()
