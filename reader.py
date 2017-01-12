@@ -31,6 +31,10 @@ def __db_choose():
 
 
 def __comchoose():
+    """
+    Lists availible COM ports. Then asks user to choose one
+    :return: String with com port
+    """
     comlist = serial.tools.list_ports.comports()
     for com in comlist:
         print('{}. {} {}'.format(comlist.index(com) + 1, com.device, com.description))

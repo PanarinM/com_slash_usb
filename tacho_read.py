@@ -4,10 +4,16 @@ from datetime import datetime
 
 
 class DeviceIsNotConnected(Exception):
+    """
+    exception derived class. Meant to be raised when device is disconnected.
+    """
     pass
 
 
 class ut372device(object):
+    """
+    class for tacho ut372 device objects
+    """
     def __init__(self, vendor_id=0x1a86, product_id=0xe008):
         self.vendor_id = vendor_id
         self.product_id = product_id
@@ -42,6 +48,11 @@ class ut372device(object):
         }
 
     def sample_handler_count(self, data):
+        """
+        Device data handler. Discards garbage and collects a full package into a global list
+        :param data: Data object. Data from device.
+        :return: None
+        """
         if not chr(data[2]) == '\x00':
             if self.marker:
                 self.lst.append(chr(data[2]))
@@ -51,6 +62,10 @@ class ut372device(object):
                 self.marker = True
 
     def _positioning_count(self):
+        """
+        Private function that parses data and forms output
+        :return: String of output data
+        """
         deciphered_raw = []
         for i in range(1, len(self.lst) - 6, 2):
             try:
@@ -73,9 +88,12 @@ class ut372device(object):
         return output
 
     def connect(self):
+        """
+        Function that connects to a device
+        :return: None
+        """
         devfilter = hid.HidDeviceFilter(vendor_id=self.vendor_id, product_id=self.product_id)
         hid_device = devfilter.get_devices()
-
         try:
             self.device = hid_device[0]
         except IndexError:
@@ -86,6 +104,10 @@ class ut372device(object):
         self._send_init_packet()
 
     def _send_init_packet(self):
+        """
+        Private function that send initialization package to a device
+        :return: None
+        """
         report = self.device.find_feature_reports()
         buffer = [0x00] * 6
         buffer[0] = 0x00
@@ -96,6 +118,10 @@ class ut372device(object):
         report[0].send()
 
     def receive_package(self):
+        """
+        Function that waits for the package received event and handles device disconnection
+        :return: None
+        """
         if self.device.is_plugged():
             sleep(0.02)
             return self.data
