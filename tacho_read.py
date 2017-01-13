@@ -77,13 +77,13 @@ class ut372device(object):
         count = deciphered_raw[:5]
         try:
             count = int(''.join(list(reversed(count))))
-            type = 'count'
+            mes_unit = 'count'
         except ValueError:
             count = float(''.join(list(reversed(count))))
-            type = 'rpm'
+            mes_unit = 'rpm'
         time = datetime.now()
         time = time.strftime('%d-%m-%Y %H:%M:%S')
-        output = type, count, time
+        output = mes_unit, count, time
         self.lst.clear()
         return output
 

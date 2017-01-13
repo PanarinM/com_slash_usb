@@ -44,9 +44,3 @@ class AccessConnect:
         cnxn.commit()
         cnxn.close
 
-
-if __name__ == '__main__':
-    pass
-    # mypath = path.realpath('.')
-    # a = AccessConnect(mypath+'\\'+'database.accdb', 'table')
-    # a.add_record('12/12/2016', 'jopa', 11, 'lel')
