@@ -8,7 +8,7 @@ from os import listdir, path
 
 def __db_choose():
     """
-    Lists *.accdb Access database files in the project forlder. Then asks user to choose one
+    Lists *.accdb Access database files in the current folder. Then asks user to choose one
     :return: String with path to the DB
     """
     counter = 0
