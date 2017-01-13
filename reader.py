@@ -20,6 +20,7 @@ def __db_choose():
             dbfiles.append(file)
     if counter == 0:
         print('No Accsess DB files found')
+        input()
         exit()
     while True:
         userinput = int(input('Choose the DB file: '))
@@ -40,6 +41,7 @@ def __comchoose():
         print('{}. {} {}'.format(comlist.index(com) + 1, com.device, com.description))
     if len(comlist) == 0:
         print('No COM devices found')
+        input()
         exit()
     while True:
         userinp = int(input('Input COM number: '))
@@ -54,16 +56,18 @@ if __name__ == "__main__":
     comnumb = str(__comchoose())
     pathtodb = __db_choose()
     try:
+        pressure = we2107(comnumb)
+    except SerialException:
+        print('Wrong COM port for pressure device')
+        input()
+        exit()
+    try:
         tacho = ut372device()
         print('Tachometer device was found by product ID = {} and vendor ID = {}'.format(tacho.product_id,
                                                                                          tacho.vendor_id))
     except DeviceIsNotConnected:
         print('Tachometer device was not found by specified product ID and vendor ID')
-        exit()
-    try:
-        pressure = we2107(comnumb)
-    except SerialException:
-        print('Wrong COM port for pressure device')
+        input()
         exit()
     print('------------------------------------------')
     while True:
