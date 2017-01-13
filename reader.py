@@ -38,6 +38,9 @@ def __comchoose():
     comlist = serial.tools.list_ports.comports()
     for com in comlist:
         print('{}. {} {}'.format(comlist.index(com) + 1, com.device, com.description))
+    if len(comlist) == 0:
+        print('No COM devices found')
+        exit()
     while True:
         userinp = int(input('Input COM number: '))
         if userinp > len(comlist) or userinp < 0:
@@ -55,8 +58,7 @@ if __name__ == "__main__":
         print('Tachometer device was found by product ID = {} and vendor ID = {}'.format(tacho.product_id,
                                                                                          tacho.vendor_id))
     except DeviceIsNotConnected:
-        print('Tachometer device was not found by product ID = {} and vendor ID = {}'.format(tacho.product_id,
-                                                                                             tacho.vendor_id))
+        print('Tachometer device was not found by specified product ID and vendor ID')
         exit()
     try:
         pressure = we2107(comnumb)
