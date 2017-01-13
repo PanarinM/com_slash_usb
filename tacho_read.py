@@ -46,6 +46,7 @@ class ut372device(object):
             '78': 'conf',
             '86': 'bit',
         }
+        self.connect()
 
     def sample_handler_count(self, data):
         """
@@ -97,8 +98,7 @@ class ut372device(object):
         try:
             self.device = hid_device[0]
         except IndexError:
-            print('Device is not connected!')
-            exit()
+            raise DeviceIsNotConnected('Device is not connected!')
         self.device.open()
         self.device.set_raw_data_handler(self.sample_handler_count)
         self._send_init_packet()
@@ -130,16 +130,9 @@ class ut372device(object):
 
 
 if __name__ == '__main__':
-    pass
-    # Menu.init_menu()
-    # ourdevice = ut372device()
-    # ourdevice.connect()
-    # while True:
-    #     try:
-    #         type, count, time  = ourdevice.receive_package()
-    #         print('{} {} time {}'.format(type, count, time))
-    #
-    #     except DeviceIsNotConnected:
-    #         Menu.reinit_menu()
-    #         ourdevice.connect()
+    try:
+        ourdevice = ut372device()
+    except DeviceIsNotConnected:
+        print('Device is not connected!')
+    print(ut372device.receive_package())
 

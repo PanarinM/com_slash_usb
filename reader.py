@@ -1,5 +1,5 @@
 from serial_read import we2107
-from tacho_read import ut372device
+from tacho_read import ut372device, DeviceIsNotConnected
 from tacho_acess_db import AccessConnect
 import serial.tools.list_ports
 from serial import SerialException
@@ -50,14 +50,19 @@ def __comchoose():
 if __name__ == "__main__":
     comnumb = str(__comchoose())
     pathtodb = __db_choose()
-    tacho = ut372device()
-    print('Tachometer device was found by product ID = {} and vendor ID = {}'.format(tacho.product_id, tacho.vendor_id))
+    try:
+        tacho = ut372device()
+        print('Tachometer device was found by product ID = {} and vendor ID = {}'.format(tacho.product_id,
+                                                                                         tacho.vendor_id))
+    except DeviceIsNotConnected:
+        print('Tachometer device was not found by product ID = {} and vendor ID = {}'.format(tacho.product_id,
+                                                                                             tacho.vendor_id))
+        exit()
     try:
         pressure = we2107(comnumb)
     except SerialException:
-        print('Wrong COM port')
+        print('Wrong COM port for pressure device')
         exit()
-    tacho.connect()
     print('------------------------------------------')
     while True:
         db = AccessConnect(pathtodb, 'table')
