@@ -1,4 +1,5 @@
 import pyodbc
+from pyodbc import Error
 
 
 class AccessConnect:
@@ -13,7 +14,10 @@ class AccessConnect:
         self.cur = self.cnxn.cursor()
 
     def __del__(self):
-        self.cnxn.close()
+        try:
+            self.cnxn.close()
+        except Error:
+            pass
 
     def read_record(self, sdate, devices):
         """
