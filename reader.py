@@ -89,5 +89,6 @@ if __name__ == "__main__":
         elif c9c_data is None:
             c9c_data = 0
             db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
+        print('', end='')
         output = """\rut372: {} {} | c9c: {} gram | time: {}""".format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
         print(output, end='')
