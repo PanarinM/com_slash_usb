@@ -26,14 +26,10 @@ class AccessConnect:
         :param devices: iteratable object of strings(list, set, dict, tuple, etc.). List of the devices
         :return: list of tuples with data from DB
         """
-        # connstr = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ='+self.database
-        # cnxn = pyodbc.connect(connstr)
-        # cur = cnxn.cursor()
         strsql = "SELECT dev_name,dev_state,dev_date FROM [{table}] where dev_date > #{date}# " \
                  "and dev_name IN ({device})".format(table=self.table, date=sdate, device=','.join(["'"+j+"'" for j in devices]))
         self.cur.execute(strsql)
         t = list(self.cur)
-        # cnxn.close()
         return t
 
     def add_record(self, sdate, device, value, data_type):
@@ -45,12 +41,8 @@ class AccessConnect:
         :param data_type: string object. Dimension of the value
         :return: None
         """
-        # connstr = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ='+self.database
-        # cnxn = pyodbc.connect(connstr, autocommit=True)
-        # cnxn.cursor()
         strsql = "insert into [{table}] (dev_name, dev_state, dev_date, dev_data_type) values('{name}', {state}, " \
                  "#{sdate}#, '{data_type}')".format(table=self.table, name=device, state=value, sdate=sdate, data_type=data_type)
         self.cnxn.execute(strsql)
-        # cnxn.commit()
-        # cnxn.close
+        self.cnxn.commit()
 
