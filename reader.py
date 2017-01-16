@@ -1,4 +1,5 @@
 from serial_read import we2107
+from pyodbc import Error
 from tacho_read import ut372device, DeviceIsNotConnected
 from tacho_acess_db import AccessConnect
 import serial.tools.list_ports
@@ -56,6 +57,12 @@ if __name__ == "__main__":
     comnumb = str(__comchoose())
     pathtodb = __db_choose()
     try:
+        db = AccessConnect(pathtodb, 'table')
+    except Error:
+        print('Error occured during the database connection. Check if Microsoft Access Driver is installed and availible')
+        input()
+        exit()
+    try:
         pressure = we2107(comnumb)
     except SerialException:
         print('Wrong COM port for pressure device')
@@ -71,7 +78,7 @@ if __name__ == "__main__":
         exit()
     print('------------------------------------------')
     while True:
-        db = AccessConnect(pathtodb, 'table')
+        # db = AccessConnect(pathtodb, 'table')
         tacho_data = tacho.receive_package()
         if tacho_data[2] == 0:
             continue
