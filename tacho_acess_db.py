@@ -17,7 +17,7 @@ class AccessConnect:
         try:
             self.cnxn.close()
         except Error:
-            pass
+            print('')
 
     def read_record(self, sdate, devices):
         """
