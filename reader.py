@@ -5,6 +5,7 @@ from tacho_acess_db import AccessConnect
 import serial.tools.list_ports
 from serial import SerialException
 from os import listdir, path
+from sys import exit
 
 
 def __db_choose():
