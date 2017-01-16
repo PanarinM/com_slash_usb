@@ -79,13 +79,15 @@ if __name__ == "__main__":
         exit()
     print('------------------------------------------')
     while True:
-        # db = AccessConnect(pathtodb, 'table')
         tacho_data = tacho.receive_package()
-        if tacho_data[2] == 0:
+        if tacho_data[2] is None or tacho_data[2] == 0:
             continue
-        print('ut372: {} {} time: {}'.format(tacho_data[1], tacho_data[0], tacho_data[2]))
         db.add_record(tacho_data[2], 'ut372', tacho_data[1], tacho_data[0])
         c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt packet')
-        print('c9c  : {} gram'.format(c9c_data))
-        db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
-        print('------------------------------------------')
+        if c9c_data is not None:
+            db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
+        elif c9c_data is None:
+            c9c_data = 0
+            db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
+        output = """\rut372: {} {} | c9c: {} gram | time: {}""".format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
+        print(output, end='')
