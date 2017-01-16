@@ -1,7 +1,10 @@
 *.whl
 *.pyc
 trash/
+build/
+dist/
 .idea/
 *.accdb
 *.laccdb
 *.spec
+*.bat
