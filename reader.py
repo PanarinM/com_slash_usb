@@ -1,36 +1,10 @@
-from serial_read import we2107
-from pyodbc import Error
-from tacho_read import ut372device, DeviceIsNotConnected
-from tacho_acess_db import AccessConnect
 import serial.tools.list_ports
 from serial import SerialException
-from os import listdir, path
 from sys import exit
 
-
-def __db_choose():
-    """
-    Lists *.accdb Access database files in the current folder. Then asks user to choose one
-    :return: String with path to the DB
-    """
-    counter = 0
-    dbfiles = []
-    for file in listdir('.'):
-        if file.endswith('.accdb'):
-            counter += 1
-            print('{}. {}'.format(counter, file))
-            dbfiles.append(file)
-    if counter == 0:
-        print('No Accsess DB files found')
-        input()
-        exit()
-    while True:
-        userinput = int(input('Choose the DB file: '))
-        if userinput > counter or userinput < 0:
-            print('Wrong input!')
-            continue
-        else:
-            return path.realpath('.\\{}'.format(dbfiles[userinput-1]))
+from serial_read import we2107
+from tacho_read import ut372device, DeviceIsNotConnected
+from postgres_connect import PostgreConnect
 
 
 def __comchoose():
@@ -56,11 +30,11 @@ def __comchoose():
 
 if __name__ == "__main__":
     comnumb = str(__comchoose())
-    pathtodb = __db_choose()
     try:
-        db = AccessConnect(pathtodb, 'table')
-    except Error:
-        print('Error occured during the database connection. Check if Microsoft Access Driver is installed and availible')
+        db = PostgreConnect()
+        db.close_connection()
+    except:
+        print('An error occured during the connection to database, make sure the service of PostgreSQL is up and running!')
         input()
         exit()
     try:
@@ -78,16 +52,14 @@ if __name__ == "__main__":
         input()
         exit()
     print('------------------------------------------')
-    while True:
-        tacho_data = tacho.receive_package()
-        if tacho_data[2] is None or tacho_data[2] == 0:
-            continue
-        db.add_record(tacho_data[2], 'ut372', tacho_data[1], tacho_data[0])
-        c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt packet')
-        if c9c_data is not None:
-            db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
-        elif c9c_data is None:
-            c9c_data = 0
-            db.add_record(tacho_data[2], 'c9c', c9c_data, 'gram')
-        output = """\rut372: {} {} | c9c: {} gram | time: {}            """.format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
-        print(output, end='')
+    with PostgreConnect() as db:
+        while True:
+            tacho_data = tacho.receive_package()
+            if tacho_data[2] is None or tacho_data[2] == 0:
+                continue
+            c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt package')
+            if c9c_data is None:
+                c9c_data = 0
+            db.add_record(tacho_data[2], c9c_data, 'gram', tacho_data[1], tacho_data[0])
+            output = """\rut372: {} {} | c9c: {} gram | time: {}            """.format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
+            print(output, end='')

@@ -83,7 +83,8 @@ class ut372device(object):
             count = float(''.join(list(reversed(count))))
             mes_unit = 'rpm'
         time = datetime.now()
-        time = time.strftime('%d-%m-%Y %H:%M:%S')
+        # time = time.strftime('%d-%m-%Y %H:%M:%S')
+        time = str(time)
         output = mes_unit, count, time
         self.lst.clear()
         return output
