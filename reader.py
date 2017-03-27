@@ -1,5 +1,6 @@
 import serial.tools.list_ports
 from serial import SerialException
+from serial import SerialTimeoutException
 from sys import exit
 
 from serial_read import we2107
@@ -57,7 +58,10 @@ if __name__ == "__main__":
             tacho_data = tacho.receive_package()
             if tacho_data[2] is None or tacho_data[2] == 0:
                 continue
-            c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt package')
+            try:
+                c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt package')
+            except (SerialTimeoutException, SerialException):
+                c9c_data = 'read_write timeout'
             if c9c_data is None:
                 c9c_data = 0
             db.add_record(tacho_data[2], c9c_data, 'gram', tacho_data[1], tacho_data[0])
