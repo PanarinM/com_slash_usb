@@ -61,7 +61,8 @@ if __name__ == "__main__":
             try:
                 c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt package')
             except (SerialTimeoutException, SerialException):
-                c9c_data = 'read_write timeout'
+                # c9c_data = 'read_write timeout'
+                c9c_data = 'NULL'
             if c9c_data is None:
                 c9c_data = 0
             db.add_record(tacho_data[2], c9c_data, 'gram', tacho_data[1], tacho_data[0])

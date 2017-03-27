@@ -10,8 +10,8 @@ class we2107(object):
         self.ser.baudrate = 2400
         self.ser.port = comnumb
         self.ser.parity = PARITY_EVEN
-        self.ser.timeout = 5
-        self.ser.write_timeout = 5
+        self.ser.timeout = 1
+        self.ser.write_timeout = 1
         self.ser.stopbits = 1
         self.ser.open()
 
