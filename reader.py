@@ -6,6 +6,7 @@ from sys import exit
 from serial_read import we2107
 from tacho_read import ut372device, DeviceIsNotConnected
 from postgres_connect import PostgreConnect
+from power_calc import PowerCalc
 
 
 def __comchoose():
@@ -30,6 +31,7 @@ def __comchoose():
 
 
 if __name__ == "__main__":
+    arm = 0.13
     comnumb = str(__comchoose())
     try:
         db = PostgreConnect()
@@ -66,5 +68,15 @@ if __name__ == "__main__":
             if c9c_data is None:
                 c9c_data = 0
             db.add_record(tacho_data[2], c9c_data, 'gram', tacho_data[1], tacho_data[0])
-            output = """\rut372: {} {} | c9c: {} gram | time: {}            """.format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
-            print(output, end='')
+            if tacho_data[0] == 'rpm':
+                ###########
+                power_ = PowerCalc(tacho_data[1], c9c_data, arm)
+                power = power_.power()
+                ###########
+                output = """\rut372: {} {} | c9c: {} gram | power: {} | time: {}                                        """\
+                    .format(tacho_data[1], tacho_data[0], c9c_data, power, tacho_data[2])
+                print(output, end='')
+            elif tacho_data[0] == 'count':
+                output = """\rut372: {} {} | c9c: {} gram | time: {}  (switch tacho to rpm to get power values)         """\
+                    .format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
+                print(output, end='')
