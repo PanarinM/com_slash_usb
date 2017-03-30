@@ -1,16 +1,11 @@
 import psycopg2
 
 
-# class ConnectionError(Exception):
-#     def __str__(self):
-#         return 'An error occured during the connection to database, make sure the service of PostgreSQL is up and running!'
-
-
 class PostgreConnect(object):
     """
     main class to push data to PostgresDB
     """
-    def __init__(self, table='main', user='postgres', password='postgres', dbname='com_slash_usb'):
+    def __init__(self, table='data', user='postgres', password='postgres', dbname='com_slash_usb'):
         self.table = table
         self.user = user
         self.dbname = dbname
@@ -40,19 +35,20 @@ class PostgreConnect(object):
         except:
             pass
 
-    def add_record(self, date, data1, type1, data2, type2):
+    def add_record(self, date, milliseconds, data1, type1, data2, type2, power=0):
         """
         function that adds a record for a specific date and time for a devices
-        :param date: date and time of the record (string value for purpose of adding milliseconds)
+        :param date: date and time of the record (datetime)
+        :param milliseconds: milliseconds of datetime, integer value
         :param data1: data for the 1st device (float)
         :param type1: data type (string)
         :param data2: data for the 2nd device (float)
         :param type2: data type (string)
         :return:
         """
-        sqlstr = """INSERT INTO {}(time, c9c, c9c_data_type, ut372, ut372_data_type) values ('{}',{},'{}',{},'{}')""".format(
-            self.table, date, data1, type1, data2, type2
-        )
+        sqlstr = "INSERT INTO {}(date_time, milliseconds, c9c, c9c_datatype, tacho, tacho_datatype, power)" \
+                 " values ('{}','{}',{},'{}',{},'{}','{}')".format(
+            self.table, date, milliseconds, data1, type1, data2, type2, power)
         self.cursor.execute(sqlstr)
         self.conn.commit()
 

@@ -58,7 +58,7 @@ if __name__ == "__main__":
     with PostgreConnect() as db:
         while True:
             tacho_data = tacho.receive_package()
-            if tacho_data[2] is None or tacho_data[2] == 0:
+            if tacho_data[2] == '': #or tacho_data[2] == 0:
                 continue
             try:
                 c9c_data = pressure.read_data() if pressure.read_data() < 3500 else print('corrupt package')
@@ -67,7 +67,7 @@ if __name__ == "__main__":
                 c9c_data = 'NULL'
             if c9c_data is None:
                 c9c_data = 0
-            db.add_record(tacho_data[2], c9c_data, 'gram', tacho_data[1], tacho_data[0])
+            datetime_, milliseconds = tacho_data[2].split('.')
             if tacho_data[0] == 'rpm':
                 ###########
                 power_ = PowerCalc(tacho_data[1], c9c_data, arm)
@@ -76,7 +76,9 @@ if __name__ == "__main__":
                 output = """\rut372: {} {} | c9c: {} gram | power: {} | time: {}                                        """\
                     .format(tacho_data[1], tacho_data[0], c9c_data, power, tacho_data[2])
                 print(output, end='')
+                db.add_record(datetime_, milliseconds, c9c_data, 'gram', tacho_data[1], tacho_data[0], power)
             elif tacho_data[0] == 'count':
                 output = """\rut372: {} {} | c9c: {} gram | time: {}  (switch tacho to rpm to get power values)         """\
                     .format(tacho_data[1], tacho_data[0], c9c_data, tacho_data[2])
                 print(output, end='')
+                db.add_record(datetime_, milliseconds, c9c_data, 'gram', tacho_data[1], tacho_data[0])

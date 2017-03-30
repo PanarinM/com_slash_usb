@@ -18,7 +18,8 @@ class ut372device(object):
         self.vendor_id = vendor_id
         self.product_id = product_id
         self.lst = []
-        self.data = 0, 0, 0
+        # self.data = 0, 0, 0
+        self.data = '', '', ''
         self.device = 'will further be overriden with device object'
         self.marker = False
         self.descriptor = {
@@ -65,7 +66,7 @@ class ut372device(object):
     def _positioning_count(self):
         """
         Private function that parses data and forms output
-        :return: String of output data
+        :return: Tuple of output data
         """
         deciphered_raw = []
         for i in range(1, len(self.lst) - 6, 2):
@@ -125,7 +126,10 @@ class ut372device(object):
         """
         if self.device.is_plugged():
             sleep(0.02)
-            return self.data
+            if self.data is not None:
+                return self.data
+            else:
+                return '','',''
         else:
             raise DeviceIsNotConnected('Device was unplugged')
 
