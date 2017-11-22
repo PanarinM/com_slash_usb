@@ -8,3 +8,6 @@ dist/
 *.laccdb
 *.spec
 *.bat
+.vs/
+bin/
+obj/

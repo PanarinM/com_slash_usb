@@ -143,7 +143,7 @@ if __name__ == '__main__':
             data = ourdevice.receive_package()
         stdout.write(' '.join((str(x) for x in data)))
     except DeviceIsNotConnected:
-        print('Device is not connected!')
+        stdout.write('Device is not connected!')
         exit()
     del ourdevice
 
