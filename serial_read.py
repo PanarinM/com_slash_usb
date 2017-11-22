@@ -1,4 +1,5 @@
 from serial import Serial, PARITY_EVEN, SerialException
+from sys import argv, stdout
 
 
 class we2107(object):
@@ -34,11 +35,16 @@ class we2107(object):
 
 
 if __name__ == '__main__':
-    comnumb = input('Input COM port number: ')
+    try:
+        comnumb = argv[1]
+    except IndexError:
+        comnumb = input('Input COM port number: ')
     try:
         device = we2107(comnumb)
+        stdout.write(str(device.read_data()))
     except SerialException:
         print('Wrong COM port')
         exit()
-    while True:
-        print(device.read_data())
+    finally:
+        device.ser.close()
+    del device

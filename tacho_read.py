@@ -144,6 +144,6 @@ if __name__ == '__main__':
         stdout.write(' '.join((str(x) for x in data)))
     except DeviceIsNotConnected:
         print('Device is not connected!')
-    finally:
-        del ourdevice
+        exit()
+    del ourdevice
 
