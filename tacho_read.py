@@ -1,6 +1,7 @@
 from time import sleep
 import pywinusb.hid as hid
 from datetime import datetime
+from sys import stdout
 
 
 class DeviceIsNotConnected(Exception):
@@ -129,7 +130,7 @@ class ut372device(object):
             if self.data is not None:
                 return self.data
             else:
-                return '','',''
+                return '', '', ''
         else:
             raise DeviceIsNotConnected('Device was unplugged')
 
@@ -137,7 +138,12 @@ class ut372device(object):
 if __name__ == '__main__':
     try:
         ourdevice = ut372device()
+        data = ('', '', '')
+        while data[2] == '':
+            data = ourdevice.receive_package()
+        stdout.write(' '.join((str(x) for x in data)))
     except DeviceIsNotConnected:
         print('Device is not connected!')
-    print(ut372device.receive_package())
+    finally:
+        del ourdevice
 
