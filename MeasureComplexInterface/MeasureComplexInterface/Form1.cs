@@ -45,6 +45,13 @@ namespace MeasureComplexInterface
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            if (worker.CancellationPending)
+                e.Cancel = true;
+            else
+            {
+                GetData();
+
+            }
 
         }
 
@@ -53,6 +60,7 @@ namespace MeasureComplexInterface
             outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372);           
             outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107);
             outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b);
+            outDT.Text = DateTime.Now.ToString("dd-MM-YYYY");
         }
 
         void SetComLists()
