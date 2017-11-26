@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace MeasureComplexInterface
@@ -10,9 +12,12 @@ namespace MeasureComplexInterface
     
     public partial class Form1 : Form
     {
+        BackgroundWorker backgroundWorker = new BackgroundWorker();
+        DateTime LogStart;
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
+        public ScriptData MultiData { get; set; }
         public int SamplingRate { get; set; }
         public string WE2107COM { get; set; }
         public string UT61bCOM { get; set; }
@@ -23,13 +28,31 @@ namespace MeasureComplexInterface
         public string OutTurbinePower { get; set; }
         public string OutBreakoutTorque { get; set; }
 
-        public System.Timers.Timer timer;
         public Form1()
         {
             InitializeComponent();
-            SetComLists();
-            TachoData = new ScriptData("../../../../tacho_read.py", "");
+
+            backgroundWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = true
+            };
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", WE2107COM);
+            MultiData = new ScriptData("../../../../multi_read.py", UT61bCOM);
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+        }
+
+        void GetData()
+        {
+            outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372);           
+            outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107);
+            outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b);
         }
 
         void SetComLists()
@@ -43,7 +66,7 @@ namespace MeasureComplexInterface
             switch (keyData)
             {
                 case Keys.F5:
-
+                    Refresh();
                     bHandled = true;
                     break;
             }
@@ -53,7 +76,6 @@ namespace MeasureComplexInterface
         {
             rButtonTorqueWind.Checked = false;
             rButtonPowerWind.Checked = true;
-
         }
 
         private void rButtonTorqueWind_CheckedChanged(object sender, EventArgs e)
@@ -66,26 +88,15 @@ namespace MeasureComplexInterface
         {
             
         }
-
+        
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            while (1 == 1)
-            {
-                outTacho.Text = TachoData.GetData();
-                outPS.Text = WE2107Data.GetData();
-                Refresh();
-            }
-                      
-            //MessageBox.Show("You faggot");
-        }
-
-        private void textBoxSamplingTime_TextChanged(object sender, EventArgs e)
-        {
+            LogStart = DateTime.Now;
         }
 
         private void textBoxTurbineDiameter_TextChanged(object sender, EventArgs e)
         {
-            Turbine.Diameter = e.ToString();
+            Turbine.Diameter = ((TextBox)sender).Text;
         }
 
         private void comboBoxRotorType_SelectedIndexChanged(object sender, EventArgs e)
@@ -95,56 +106,17 @@ namespace MeasureComplexInterface
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            SamplingRate = Convert.ToInt32(((NumericUpDown)sender).Value.ToString());
+            SamplingRate = Convert.ToInt32(((NumericUpDown)sender).Value);
         }
 
-        private void outPS_Click(object sender, EventArgs e)
+        private void textBoxVaneWidth_TextChanged(object sender, EventArgs e)
         {
+            Turbine.VaneWidth = ((TextBox)sender).Text;
+        }
 
+        private void textBoxVaneHeight_TextChanged(object sender, EventArgs e)
+        {
+            Turbine.VaneHeight = ((TextBox)sender).Text;
         }
     }
-    public class TurbineData
-    {
-        public string RotorType { get; set; }
-        public string VaneHeight { get; set; }
-        public string VaneWidth { get; set; }
-        public string Diameter { get; set; }
-    }
-
-    public class ScriptData
-    {
-        public string Response { get; private set; }
-        public string ScriptPath { get; private set; }
-        public string Arguments { get; private set; }
-        public string PythonPath => "C:/Program Files/Python36/python.exe";
-        public System.Timers.Timer timer;
-        public ScriptData(string scriptPath, string args)
-        {
-            ScriptPath = scriptPath;
-            Arguments = args;
-        }
-        public string GetData()
-        {
-
-            var response = string.Empty;
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = PythonPath;
-            start.Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, Arguments);
-            start.UseShellExecute = false;// Do not use OS shell
-            start.CreateNoWindow = true; // We don't need new window
-            start.RedirectStandardOutput = true;// Any output, generated by application will be redirected back
-            start.RedirectStandardError = true; // Any error in standard output will be redirected back (for example exceptions)
-            using (Process process = Process.Start(start))
-            {
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
-                    Response = reader.ReadToEnd(); ;
-                }
-            }
-            
-            return Response;
-        }
-    }
-
 }
