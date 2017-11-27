@@ -33,6 +33,7 @@ namespace MeasureComplexInterface
         {
             InitializeComponent();
             chart.Series.Clear();
+
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer
             {
