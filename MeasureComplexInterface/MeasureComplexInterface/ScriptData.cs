@@ -8,8 +8,7 @@ namespace MeasureComplexInterface
         public string Response { get; private set; }
         public string ScriptPath { get; private set; }
         public string Arguments { get; set; }
-        public string PythonPath => "C:/Program Files/Python36/python.exe";
-        public System.Timers.Timer timer;
+        public string PythonPath => "C:/Program Files/Python35/python.exe";
 
         public ScriptData(string scriptPath, string args)
         {

@@ -46,6 +46,8 @@
             this.buttonShowChart = new System.Windows.Forms.Button();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.outDT = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.outTorque = new System.Windows.Forms.Label();
             this.outPower = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -64,8 +66,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rButtonTorqueWind = new System.Windows.Forms.RadioButton();
             this.rButtonPowerWind = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
-            this.outDT = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.outPerfRate = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -230,6 +232,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.outPerfRate);
+            this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.outDT);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.outTorque);
@@ -248,6 +252,24 @@
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
+            // 
+            // outDT
+            // 
+            this.outDT.AutoSize = true;
+            this.outDT.Location = new System.Drawing.Point(108, 107);
+            this.outDT.Name = "outDT";
+            this.outDT.Size = new System.Drawing.Size(34, 13);
+            this.outDT.TabIndex = 17;
+            this.outDT.Text = "00.00";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 107);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Current time:";
             // 
             // outTorque
             // 
@@ -429,23 +451,23 @@
             this.rButtonPowerWind.UseVisualStyleBackColor = true;
             this.rButtonPowerWind.CheckedChanged += new System.EventHandler(this.rButtonPowerWind_CheckedChanged);
             // 
-            // label5
+            // label7
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 107);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Current time:";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 125);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(91, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Performance rate:";
             // 
-            // outDT
+            // outPerfRate
             // 
-            this.outDT.AutoSize = true;
-            this.outDT.Location = new System.Drawing.Point(108, 107);
-            this.outDT.Name = "outDT";
-            this.outDT.Size = new System.Drawing.Size(34, 13);
-            this.outDT.TabIndex = 17;
-            this.outDT.Text = "00.00";
+            this.outPerfRate.AutoSize = true;
+            this.outPerfRate.Location = new System.Drawing.Point(108, 125);
+            this.outPerfRate.Name = "outPerfRate";
+            this.outPerfRate.Size = new System.Drawing.Size(34, 13);
+            this.outPerfRate.TabIndex = 19;
+            this.outPerfRate.Text = "00.00";
             // 
             // Form1
             // 
@@ -510,6 +532,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label outDT;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label outPerfRate;
+        private System.Windows.Forms.Label label7;
     }
 }
 

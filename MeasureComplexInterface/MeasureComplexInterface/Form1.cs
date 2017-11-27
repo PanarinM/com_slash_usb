@@ -18,49 +18,49 @@ namespace MeasureComplexInterface
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
         public ScriptData MultiData { get; set; }
-        public int SamplingRate { get; set; }
+        public int SamplingRate { get; set; } = 1;
         public string WE2107COM { get; set; }
         public string UT61bCOM { get; set; }
-
+        System.Timers.Timer tmr;
         public string OutUT372 { get; set; }
         public string OutUT61b { get; set; }
         public string OutWE2107 { get; set; }
         public string OutTurbinePower { get; set; }
         public string OutBreakoutTorque { get; set; }
+        public List<int> PerfHistory { get; set; } = new List<int>();
 
         public Form1()
         {
             InitializeComponent();
-
-            backgroundWorker = new BackgroundWorker
+            Turbine = new TurbineData();
+            tmr = new System.Timers.Timer
             {
-                WorkerSupportsCancellation = true
+                AutoReset = false                
             };
-            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            tmr.Elapsed += Tmr_Elapsed;            
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", WE2107COM);
             MultiData = new ScriptData("../../../../multi_read.py", UT61bCOM);
         }
 
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        void GetData(DateTime currentTime)
         {
-            BackgroundWorker worker = sender as BackgroundWorker;
-            if (worker.CancellationPending)
-                e.Cancel = true;
-            else
+            if (InProcess)
             {
-                GetData();
-
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
+                outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
+                outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
+                var perf = sw.ElapsedMilliseconds;
+                sw.Stop();
+                outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
+                outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
+                PerfHistory.Add((int)perf);
+                Thread.Sleep(SamplingRate * 1000);
+                GetData(DateTime.Now);
             }
 
-        }
-
-        void GetData()
-        {
-            outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372);           
-            outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107);
-            outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b);
-            outDT.Text = DateTime.Now.ToString("dd-MM-YYYY");
         }
 
         void SetComLists()
@@ -71,24 +71,24 @@ namespace MeasureComplexInterface
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             bool bHandled = false;
-            switch (keyData)
+            if (keyData == Keys.F5)
             {
-                case Keys.F5:
-                    Refresh();
-                    bHandled = true;
-                    break;
+                Refresh();
+                bHandled = true;
             }
             return bHandled;
         }
         private void rButtonPowerWind_CheckedChanged(object sender, EventArgs e)
-        {
-            rButtonTorqueWind.Checked = false;
+        {   
+            if(rButtonPowerWind.Checked)
+                rButtonTorqueWind.Checked = false;
             rButtonPowerWind.Checked = true;
         }
 
         private void rButtonTorqueWind_CheckedChanged(object sender, EventArgs e)
         {
-            rButtonPowerWind.Checked = false;
+            if(rButtonTorqueWind.Checked)
+                rButtonPowerWind.Checked = false;
             rButtonTorqueWind.Checked = true;
         }
 
@@ -96,10 +96,27 @@ namespace MeasureComplexInterface
         {
             
         }
-        
+        bool InProcess { get; set; }
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            LogStart = DateTime.Now;
+            if (!InProcess)
+            {
+                buttonStart.Text = "Stop";
+                LogStart = DateTime.Now;
+                PerfHistory.Clear();
+                tmr.Enabled = true;           
+            }
+            else
+            {
+                tmr.Enabled = false;
+                buttonStart.Text = "Stop";
+            }
+            InProcess = !InProcess;
+        }
+
+        private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            GetData(e.SignalTime);
         }
 
         private void textBoxTurbineDiameter_TextChanged(object sender, EventArgs e)
@@ -125,6 +142,6 @@ namespace MeasureComplexInterface
         private void textBoxVaneHeight_TextChanged(object sender, EventArgs e)
         {
             Turbine.VaneHeight = ((TextBox)sender).Text;
-        }
+        }       
     }
 }
