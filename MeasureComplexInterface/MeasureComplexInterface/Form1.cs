@@ -6,13 +6,13 @@ using System.IO;
 using System.IO.Ports;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MeasureComplexInterface
 {
-    
+
     public partial class Form1 : Form
     {
-        BackgroundWorker backgroundWorker = new BackgroundWorker();
         DateTime LogStart;
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
@@ -32,12 +32,13 @@ namespace MeasureComplexInterface
         public Form1()
         {
             InitializeComponent();
+            chart.Series.Clear();
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer
             {
-                AutoReset = false                
+                AutoReset = false
             };
-            tmr.Elapsed += Tmr_Elapsed;            
+            tmr.Elapsed += Tmr_Elapsed;
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", WE2107COM);
             MultiData = new ScriptData("../../../../multi_read.py", UT61bCOM);
@@ -61,6 +62,34 @@ namespace MeasureComplexInterface
                 GetData(DateTime.Now);
             }
 
+        }
+
+        void CreateChart()
+        {
+            var series = new Series
+            {
+                ChartType = SeriesChartType.Spline,
+                Name = "Series228",
+            };
+            for (var i = 0; i < PerfHistory.Count; i++)
+            {
+                series.Points.AddXY(i, PerfHistory[i]);
+            }
+            chart.Series.Add(series);
+        }
+
+        double CalcPower(double x)
+        {
+            double result = 0;
+            //code here
+            return result;
+        }
+
+        double CalcTorque(double x)
+        {
+            double result = 0;
+            //code here
+            return result;
         }
 
         void SetComLists()
@@ -94,7 +123,7 @@ namespace MeasureComplexInterface
 
         private void buttonShowChart_Click(object sender, EventArgs e)
         {
-            
+            CreateChart();
         }
         bool InProcess { get; set; }
         private void buttonStart_Click(object sender, EventArgs e)
@@ -109,7 +138,7 @@ namespace MeasureComplexInterface
             else
             {
                 tmr.Enabled = false;
-                buttonStart.Text = "Stop";
+                buttonStart.Text = "Start";
             }
             InProcess = !InProcess;
         }

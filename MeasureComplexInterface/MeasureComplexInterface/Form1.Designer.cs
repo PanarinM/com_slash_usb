@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMultiCOM = new System.Windows.Forms.ComboBox();
@@ -46,6 +46,8 @@
             this.buttonShowChart = new System.Windows.Forms.Button();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.outPerfRate = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.outDT = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.outTorque = new System.Windows.Forms.Label();
@@ -66,8 +68,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rButtonTorqueWind = new System.Windows.Forms.RadioButton();
             this.rButtonPowerWind = new System.Windows.Forms.RadioButton();
-            this.label7 = new System.Windows.Forms.Label();
-            this.outPerfRate = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -85,7 +86,7 @@
             this.groupBox1.Controls.Add(this.comboBoxPSCOM);
             this.groupBox1.Controls.Add(this.buttonStart);
             this.groupBox1.Controls.Add(this.LabelSamplingTime);
-            this.groupBox1.Location = new System.Drawing.Point(412, 12);
+            this.groupBox1.Location = new System.Drawing.Point(638, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 130);
             this.groupBox1.TabIndex = 0;
@@ -206,9 +207,9 @@
             // 
             // buttonShowChart
             // 
-            this.buttonShowChart.Location = new System.Drawing.Point(313, 13);
+            this.buttonShowChart.Location = new System.Drawing.Point(6, 42);
             this.buttonShowChart.Name = "buttonShowChart";
-            this.buttonShowChart.Size = new System.Drawing.Size(75, 85);
+            this.buttonShowChart.Size = new System.Drawing.Size(104, 25);
             this.buttonShowChart.TabIndex = 1;
             this.buttonShowChart.Text = "Show Chart";
             this.buttonShowChart.UseVisualStyleBackColor = true;
@@ -216,17 +217,17 @@
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(394, 266);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart.Series.Add(series2);
+            this.chart.Size = new System.Drawing.Size(620, 266);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart1";
             // 
@@ -246,17 +247,35 @@
             this.groupBox3.Controls.Add(this.outTacho);
             this.groupBox3.Controls.Add(this.outMulti);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(412, 284);
+            this.groupBox3.Location = new System.Drawing.Point(12, 284);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 161);
+            this.groupBox3.Size = new System.Drawing.Size(558, 80);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
             // 
+            // outPerfRate
+            // 
+            this.outPerfRate.AutoSize = true;
+            this.outPerfRate.Location = new System.Drawing.Point(481, 35);
+            this.outPerfRate.Name = "outPerfRate";
+            this.outPerfRate.Size = new System.Drawing.Size(34, 13);
+            this.outPerfRate.TabIndex = 19;
+            this.outPerfRate.Text = "00.00";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(384, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(91, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Performance rate:";
+            // 
             // outDT
             // 
             this.outDT.AutoSize = true;
-            this.outDT.Location = new System.Drawing.Point(108, 107);
+            this.outDT.Location = new System.Drawing.Point(481, 16);
             this.outDT.Name = "outDT";
             this.outDT.Size = new System.Drawing.Size(34, 13);
             this.outDT.TabIndex = 17;
@@ -265,7 +284,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 107);
+            this.label5.Location = new System.Drawing.Point(409, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 13);
             this.label5.TabIndex = 16;
@@ -274,7 +293,7 @@
             // outTorque
             // 
             this.outTorque.AutoSize = true;
-            this.outTorque.Location = new System.Drawing.Point(108, 88);
+            this.outTorque.Location = new System.Drawing.Point(314, 35);
             this.outTorque.Name = "outTorque";
             this.outTorque.Size = new System.Drawing.Size(36, 13);
             this.outTorque.TabIndex = 15;
@@ -283,7 +302,7 @@
             // outPower
             // 
             this.outPower.AutoSize = true;
-            this.outPower.Location = new System.Drawing.Point(108, 70);
+            this.outPower.Location = new System.Drawing.Point(314, 16);
             this.outPower.Name = "outPower";
             this.outPower.Size = new System.Drawing.Size(27, 13);
             this.outPower.TabIndex = 14;
@@ -292,7 +311,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 88);
+            this.label14.Location = new System.Drawing.Point(222, 35);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(86, 13);
             this.label14.TabIndex = 13;
@@ -301,7 +320,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 70);
+            this.label13.Location = new System.Drawing.Point(222, 16);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(78, 13);
             this.label13.TabIndex = 12;
@@ -391,7 +410,7 @@
             this.groupBox4.Controls.Add(this.textBoxVaneWidth);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Location = new System.Drawing.Point(412, 148);
+            this.groupBox4.Location = new System.Drawing.Point(638, 148);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(200, 130);
             this.groupBox4.TabIndex = 12;
@@ -417,12 +436,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.rButtonTorqueWind);
             this.groupBox2.Controls.Add(this.rButtonPowerWind);
             this.groupBox2.Controls.Add(this.buttonShowChart);
-            this.groupBox2.Location = new System.Drawing.Point(12, 284);
+            this.groupBox2.Location = new System.Drawing.Point(576, 284);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(394, 107);
+            this.groupBox2.Size = new System.Drawing.Size(262, 80);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chart options:";
@@ -430,7 +450,7 @@
             // rButtonTorqueWind
             // 
             this.rButtonTorqueWind.AutoSize = true;
-            this.rButtonTorqueWind.Location = new System.Drawing.Point(161, 47);
+            this.rButtonTorqueWind.Location = new System.Drawing.Point(6, 19);
             this.rButtonTorqueWind.Name = "rButtonTorqueWind";
             this.rButtonTorqueWind.Size = new System.Drawing.Size(121, 17);
             this.rButtonTorqueWind.TabIndex = 3;
@@ -442,7 +462,7 @@
             // rButtonPowerWind
             // 
             this.rButtonPowerWind.AutoSize = true;
-            this.rButtonPowerWind.Location = new System.Drawing.Point(16, 47);
+            this.rButtonPowerWind.Location = new System.Drawing.Point(133, 19);
             this.rButtonPowerWind.Name = "rButtonPowerWind";
             this.rButtonPowerWind.Size = new System.Drawing.Size(117, 17);
             this.rButtonPowerWind.TabIndex = 2;
@@ -451,29 +471,20 @@
             this.rButtonPowerWind.UseVisualStyleBackColor = true;
             this.rButtonPowerWind.CheckedChanged += new System.EventHandler(this.rButtonPowerWind_CheckedChanged);
             // 
-            // label7
+            // button1
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 125);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(91, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Performance rate:";
-            // 
-            // outPerfRate
-            // 
-            this.outPerfRate.AutoSize = true;
-            this.outPerfRate.Location = new System.Drawing.Point(108, 125);
-            this.outPerfRate.Name = "outPerfRate";
-            this.outPerfRate.Size = new System.Drawing.Size(34, 13);
-            this.outPerfRate.TabIndex = 19;
-            this.outPerfRate.Text = "00.00";
+            this.button1.Location = new System.Drawing.Point(133, 42);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(104, 25);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Clear Chart Area";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 487);
+            this.ClientSize = new System.Drawing.Size(850, 369);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -534,6 +545,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label outPerfRate;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button1;
     }
 }
 
