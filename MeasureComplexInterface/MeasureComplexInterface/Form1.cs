@@ -4,15 +4,19 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Npgsql;
+using System.Data;
 
 namespace MeasureComplexInterface
 {
 
     public partial class Form1 : Form
     {
+        bool InProcess { get; set; }
         DateTime LogStart;
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
@@ -33,7 +37,7 @@ namespace MeasureComplexInterface
         {
             InitializeComponent();
             chart.Series.Clear();
-
+            get_text(0);
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer
             {
@@ -42,25 +46,45 @@ namespace MeasureComplexInterface
             tmr.Elapsed += Tmr_Elapsed;
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", WE2107COM);
-            MultiData = new ScriptData("../../../../multi_read.py", UT61bCOM);
+            MultiData = new ScriptData("../../../../ut61b.py", UT61bCOM);
         }
-
-        void GetData(DateTime currentTime)
+        bool test = false;
+        void GetData(DateTime currentTime, int tick)
         {
             if (InProcess)
             {
+                
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
-                outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
-                outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
-                var perf = sw.ElapsedMilliseconds;
+                if (!test)
+                {
+                    outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
+                    outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
+                    outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
+                }
+                else
+                {
+                    var shtoto = get_text(tick);
+                    if (tick >= Convert.ToInt32(shtoto.Last()))
+                    {
+                        tmr.Enabled = false;
+                        InProcess = !InProcess;
+                        return;
+                    }
+                    outTacho.Invoke(new MethodInvoker(() => outTacho.Text = shtoto[0]));
+                    outPS.Invoke(new MethodInvoker(() => outPS.Text = shtoto[1]));
+                    outMulti.Invoke(new MethodInvoker(() => outMulti.Text = shtoto[2]));
+                }
+                    var perf = sw.ElapsedMilliseconds;
                 sw.Stop();
                 outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
                 outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
                 PerfHistory.Add((int)perf);
+                if(checkBoxLog.Checked)
+                    chart.Invoke(new MethodInvoker(() => chart.Series.Last().Points.AddXY(PerfHistory.Count,(int)perf)));
+
                 Thread.Sleep(SamplingRate * 1000);
-                GetData(DateTime.Now);
+                GetData(DateTime.Now, ++tick);
             }
 
         }
@@ -70,12 +94,10 @@ namespace MeasureComplexInterface
             var series = new Series
             {
                 ChartType = SeriesChartType.Spline,
-                Name = "Series228",
+                Name = "Series"+DateTime.Now.ToString("hh-mm-ss"),
             };
             for (var i = 0; i < PerfHistory.Count; i++)
-            {
-                series.Points.AddXY(i, PerfHistory[i]);
-            }
+                series.Points.AddXY(i, PerfHistory[i]);            
             chart.Series.Add(series);
         }
 
@@ -126,7 +148,7 @@ namespace MeasureComplexInterface
         {
             CreateChart();
         }
-        bool InProcess { get; set; }
+
         private void buttonStart_Click(object sender, EventArgs e)
         {
             if (!InProcess)
@@ -142,11 +164,21 @@ namespace MeasureComplexInterface
                 buttonStart.Text = "Start";
             }
             InProcess = !InProcess;
+            DatabaseConnect dconn = new DatabaseConnect();
+            List<string> lst = dconn.SelectQuery("");
+            var a = dconn.UpdateRotorInfo(new string[]
+            {
+                "Darrieus",
+                "2",
+                "2",
+                "8",
+                "0.13"
+            });
         }
-
+        int c = 0;
         private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            GetData(e.SignalTime);
+            GetData(e.SignalTime, c++);
         }
 
         private void textBoxTurbineDiameter_TextChanged(object sender, EventArgs e)
@@ -172,6 +204,119 @@ namespace MeasureComplexInterface
         private void textBoxVaneHeight_TextChanged(object sender, EventArgs e)
         {
             Turbine.VaneHeight = ((TextBox)sender).Text;
-        }       
+        }
+
+        private void checkBoxLog_CheckedChanged(object sender, EventArgs e)
+        {
+            if(((CheckBox)sender).Checked)
+            {
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chart.Series.Clear();
+        }
+
+        private string[] get_text(int count)
+        {
+            string[][] filelist;
+            string[] file = File.ReadAllLines("../../test.txt");
+            string[] result = new string[file.Count()+1];
+            filelist = new string[file.Length][];
+            for (var f = 0; f < file.Length; f++)
+            {
+                filelist[f] = file[f].Split(',');
+                result[f] = filelist[f][count];
+                result[file.Count()] = filelist[f].Count().ToString();
+            }
+            
+            return result;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            test = true;
+            c = 0;
+            buttonStart.PerformClick();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GC.Collect();
+            Environment.Exit(-1);
+        }
     }
+
+    public class DatabaseConnect
+    {
+        DataSet ds = new DataSet();
+        NpgsqlConnection npgsqlConnection;
+        public DatabaseConnect()
+        {
+            string connectionString = String.Format("Server={0};Port={1};" +
+                    "User Id={2};Password={3};Database={4};",
+                    "127.0.0.1", "5432", "postgres",
+                    "postgres", "com_slash_usb");
+            npgsqlConnection = new NpgsqlConnection(connectionString);
+            npgsqlConnection.Open();        
+        }
+        List<string> result = new List<string>();
+
+        public List<string> SelectQuery(string sqlquery)
+        {
+            result.Clear();
+            sqlquery = "SELECT * FROM data WHERE \"date_time\" < '2017-03-30 11:50:00';";
+            using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(sqlquery, npgsqlConnection))
+            {
+                using (NpgsqlCommand cmd = new NpgsqlCommand(sqlquery, npgsqlConnection))
+                {
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                            result.Add(reader["date_time"].ToString());
+                    }
+                }
+            }
+            return result;
+        }
+        //public int 
+        public List<string> UpdateRotorInfo(string[] param)
+        {
+            result.Clear();
+            var query2 = "select id from rotor order by id desc limit 1";
+            var query = string.Format(
+                "insert into rotor(\"type\",\"vane_width\",\"vane_height\",\"turbine_diameter\", \"arm\") values('{0}','{1}','{2}','{3}','{4}')",
+                param[0],param[1],param[2],param[3],param[4]);           
+            using (NpgsqlCommand cmd = new NpgsqlCommand(query, npgsqlConnection))
+            {
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        result.Add(reader[0].ToString());
+                }
+            }
+            using (NpgsqlCommand cmd = new NpgsqlCommand(query2, npgsqlConnection))
+            {
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        result.Add(reader[0].ToString());
+                }
+            }
+
+            return result;
+        }
+    }
+
 }

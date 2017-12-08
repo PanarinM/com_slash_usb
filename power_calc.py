@@ -1,5 +1,6 @@
 import math
 from decimal import Decimal, getcontext
+from sys import argv, stdout
 
 
 class PowerCalc(object):
@@ -25,7 +26,10 @@ class PowerCalc(object):
     def power(self):
         return self.frequency()*self.torque()
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    rpm, force, arm = argv[1].split(',')
+    pc = PowerCalc(*argv[1].split(','))
+    stdout.write(','.join([str(pc.power()), str(pc.torque())]))
 #     power = PowerCalc(12.435, 250, 0.13)
 #     print(power.pi)
 #     print(power.g)

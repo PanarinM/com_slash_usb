@@ -32,7 +32,7 @@ namespace MeasureComplexInterface
                 using (StreamReader reader = process.StandardOutput)
                 {
                     string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
-                    Response = reader.ReadToEnd(); ;
+                    Response = reader.ReadToEnd(); 
                 }
             }
             return Response;
