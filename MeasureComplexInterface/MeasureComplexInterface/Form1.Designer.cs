@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxWindSpeed = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.checkBoxLog = new System.Windows.Forms.CheckBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMultiCOM = new System.Windows.Forms.ComboBox();
@@ -75,8 +77,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -88,7 +88,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBoxWindSpeed);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.checkBoxLog);
             this.groupBox1.Controls.Add(this.numericUpDown1);
@@ -104,6 +104,23 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки";
+            // 
+            // textBoxWindSpeed
+            // 
+            this.textBoxWindSpeed.Location = new System.Drawing.Point(163, 100);
+            this.textBoxWindSpeed.Name = "textBoxWindSpeed";
+            this.textBoxWindSpeed.Size = new System.Drawing.Size(74, 20);
+            this.textBoxWindSpeed.TabIndex = 17;
+            this.textBoxWindSpeed.TextChanged += new System.EventHandler(this.textBoxWindSpeed_TextChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 103);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "Скорость ветра";
             // 
             // checkBoxLog
             // 
@@ -240,16 +257,16 @@
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(12, 34);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart.Series.Add(series2);
             this.chart.Size = new System.Drawing.Size(577, 330);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart1";
@@ -552,22 +569,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 103);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(87, 13);
-            this.label15.TabIndex = 16;
-            this.label15.Text = "Скорость ветра";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(163, 100);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(74, 20);
-            this.textBox1.TabIndex = 17;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -645,7 +646,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxWindSpeed;
         private System.Windows.Forms.Label label15;
     }
 }

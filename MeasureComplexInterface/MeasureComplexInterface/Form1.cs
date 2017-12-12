@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
@@ -8,30 +7,35 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using Npgsql;
-using System.Data;
 
 namespace MeasureComplexInterface
 {
-
+    enum ChartType
+    {
+        PowerFreq,
+        TorqueFreq
+    }
     public partial class Form1 : Form
     {
         bool InProcess { get; set; }
-        DateTime LogStart;
+
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
         public ScriptData MultiData { get; set; }
+
         public int SamplingRate { get; set; } = 1;
+        public double WindSpeed { get; set; }
         public string WE2107COM { get; set; }
         public string UT61bCOM { get; set; }
-        System.Timers.Timer tmr;
         public string OutUT372 { get; set; }
         public string OutUT61b { get; set; }
-        public string OutWE2107 { get; set; }
-        public string OutTurbinePower { get; set; }
+        public string OuputTurbinePower { get; set; }
         public string OutBreakoutTorque { get; set; }
+
         public List<int> PerfHistory { get; set; } = new List<int>();
+        DateTime LogStart;
+        System.Timers.Timer tmr;
 
         public Form1()
         {
@@ -89,30 +93,30 @@ namespace MeasureComplexInterface
 
         }
 
-        void CreateChart()
+        void CreateChart(ChartType chartType)
         {
-            var series = new Series
+            var series = new Series()
             {
                 ChartType = SeriesChartType.Spline,
-                Name = "Series"+DateTime.Now.ToString("hh-mm-ss"),
+                Name = string.Format("V = {0}", WindSpeed.ToString())
             };
+
             for (var i = 0; i < PerfHistory.Count; i++)
-                series.Points.AddXY(i, PerfHistory[i]);            
+                switch (chartType)
+                {
+                    case ChartType.PowerFreq:
+                        series.BorderWidth = 3;
+                        var valX = Convert.ToDouble(OutUT372);
+                        var valY = Convert.ToDouble(OuputTurbinePower);
+                        series.Points.AddXY(valX, valY);
+                        break;
+                    case ChartType.TorqueFreq:
+                        valX = Convert.ToDouble(OutUT372);
+                        valY = Convert.ToDouble(OutBreakoutTorque);
+                        series.Points.AddXY(OutUT372, OutBreakoutTorque);
+                        break;
+                }
             chart.Series.Add(series);
-        }
-
-        double CalcPower(double x)
-        {
-            double result = 0;
-            //code here
-            return result;
-        }
-
-        double CalcTorque(double x)
-        {
-            double result = 0;
-            //code here
-            return result;
         }
 
         void SetComLists()
@@ -122,7 +126,7 @@ namespace MeasureComplexInterface
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            bool bHandled = false;
+            var bHandled = false;
             if (keyData == Keys.F5)
             {
                 Refresh();
@@ -146,7 +150,8 @@ namespace MeasureComplexInterface
 
         private void buttonShowChart_Click(object sender, EventArgs e)
         {
-            CreateChart();
+            var arg = rButtonPowerWind.Checked ? ChartType.PowerFreq : ChartType.TorqueFreq;
+            CreateChart(arg);
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -230,8 +235,7 @@ namespace MeasureComplexInterface
                 filelist[f] = file[f].Split(',');
                 result[f] = filelist[f][count];
                 result[file.Count()] = filelist[f].Count().ToString();
-            }
-            
+            }            
             return result;
         }
 
@@ -246,6 +250,11 @@ namespace MeasureComplexInterface
         {
             GC.Collect();
             Environment.Exit(-1);
+        }
+
+        private void textBoxWindSpeed_TextChanged(object sender, EventArgs e)
+        {
+            WindSpeed = Convert.ToDouble(textBoxWindSpeed.Text);
         }
     }
 }
