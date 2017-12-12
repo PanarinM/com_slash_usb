@@ -6,25 +6,25 @@ from sys import argv, stdout
 class PowerCalc(object):
     getcontext().prec = 6
     pi = Decimal(math.pi)
-    g = Decimal(9.7803)
+    g = Decimal(9.81)
     k = Decimal(g/1000)
 
     def __init__(self, rpm, force, arm):
-        self.rpm = Decimal(rpm)
-        self.force = Decimal(force)
-        self.arm = Decimal(arm)
+        self.rpm = Decimal(rpm) #частота вращения
+        self.force = Decimal(force) # сила в г
+        self.arm = Decimal(arm) # плечо силы в метрах
 
     def frequency(self):
-        return (30/self.pi)*self.rpm
+        return (self.pi/30)*self.rpm # угловая скорость в радианах на секунду
 
     def conv_force(self):
-        return self.k * self.force
+        return self.k * self.force #сила, Н
 
     def torque(self):
-        return self.conv_force() * self.arm
+        return self.conv_force() * self.arm # момент в Н*м
 
     def power(self):
-        return self.frequency()*self.torque()
+        return self.frequency()*self.torque() #мощность в Ваттах
 
 if __name__ == '__main__':
     rpm, force, arm = argv[1].split(',')

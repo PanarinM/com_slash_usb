@@ -75,6 +75,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -86,6 +88,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.checkBoxLog);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.comboBoxMultiCOM);
@@ -96,7 +100,7 @@
             this.groupBox1.Controls.Add(this.LabelSamplingTime);
             this.groupBox1.Location = new System.Drawing.Point(595, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(243, 130);
+            this.groupBox1.Size = new System.Drawing.Size(243, 157);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки";
@@ -104,7 +108,7 @@
             // checkBoxLog
             // 
             this.checkBoxLog.AutoSize = true;
-            this.checkBoxLog.Location = new System.Drawing.Point(9, 103);
+            this.checkBoxLog.Location = new System.Drawing.Point(9, 130);
             this.checkBoxLog.Name = "checkBoxLog";
             this.checkBoxLog.Size = new System.Drawing.Size(95, 17);
             this.checkBoxLog.TabIndex = 15;
@@ -171,7 +175,7 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(163, 100);
+            this.buttonStart.Location = new System.Drawing.Point(163, 126);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(74, 23);
             this.buttonStart.TabIndex = 4;
@@ -226,7 +230,7 @@
             // 
             // buttonShowChart
             // 
-            this.buttonShowChart.Location = new System.Drawing.Point(6, 42);
+            this.buttonShowChart.Location = new System.Drawing.Point(6, 65);
             this.buttonShowChart.Name = "buttonShowChart";
             this.buttonShowChart.Size = new System.Drawing.Size(104, 25);
             this.buttonShowChart.TabIndex = 1;
@@ -246,7 +250,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(577, 293);
+            this.chart.Size = new System.Drawing.Size(577, 330);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart1";
             // 
@@ -266,7 +270,7 @@
             this.groupBox3.Controls.Add(this.outTacho);
             this.groupBox3.Controls.Add(this.outMulti);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(12, 333);
+            this.groupBox3.Location = new System.Drawing.Point(12, 370);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(507, 80);
             this.groupBox3.TabIndex = 11;
@@ -431,9 +435,9 @@
             this.groupBox4.Controls.Add(this.textBoxVaneWidth);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Location = new System.Drawing.Point(604, 170);
+            this.groupBox4.Location = new System.Drawing.Point(595, 197);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(234, 157);
+            this.groupBox4.Size = new System.Drawing.Size(243, 166);
             this.groupBox4.TabIndex = 12;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Данные ротора";
@@ -482,17 +486,16 @@
             this.groupBox2.Controls.Add(this.rButtonTorqueWind);
             this.groupBox2.Controls.Add(this.rButtonPowerWind);
             this.groupBox2.Controls.Add(this.buttonShowChart);
-            this.groupBox2.Location = new System.Drawing.Point(525, 333);
+            this.groupBox2.Location = new System.Drawing.Point(525, 370);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(313, 80);
+            this.groupBox2.Size = new System.Drawing.Size(313, 118);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры графика:";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(149, 42);
+            this.button1.Location = new System.Drawing.Point(127, 65);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(104, 25);
             this.button1.TabIndex = 4;
@@ -505,22 +508,22 @@
             this.rButtonTorqueWind.AutoSize = true;
             this.rButtonTorqueWind.Location = new System.Drawing.Point(6, 19);
             this.rButtonTorqueWind.Name = "rButtonTorqueWind";
-            this.rButtonTorqueWind.Size = new System.Drawing.Size(111, 17);
+            this.rButtonTorqueWind.Size = new System.Drawing.Size(218, 17);
             this.rButtonTorqueWind.TabIndex = 3;
             this.rButtonTorqueWind.TabStop = true;
-            this.rButtonTorqueWind.Text = "Момент от ветра";
+            this.rButtonTorqueWind.Text = "График момента от угловой скорости";
             this.rButtonTorqueWind.UseVisualStyleBackColor = true;
             this.rButtonTorqueWind.CheckedChanged += new System.EventHandler(this.rButtonTorqueWind_CheckedChanged);
             // 
             // rButtonPowerWind
             // 
             this.rButtonPowerWind.AutoSize = true;
-            this.rButtonPowerWind.Location = new System.Drawing.Point(149, 19);
+            this.rButtonPowerWind.Location = new System.Drawing.Point(6, 42);
             this.rButtonPowerWind.Name = "rButtonPowerWind";
-            this.rButtonPowerWind.Size = new System.Drawing.Size(124, 17);
+            this.rButtonPowerWind.Size = new System.Drawing.Size(225, 17);
             this.rButtonPowerWind.TabIndex = 2;
             this.rButtonPowerWind.TabStop = true;
-            this.rButtonPowerWind.Text = "Мощность от ветра";
+            this.rButtonPowerWind.Text = "График мощности от угловой скорости";
             this.rButtonPowerWind.UseVisualStyleBackColor = true;
             this.rButtonPowerWind.CheckedChanged += new System.EventHandler(this.rButtonPowerWind_CheckedChanged);
             // 
@@ -549,11 +552,27 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 103);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "Скорость ветра";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(163, 100);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(74, 20);
+            this.textBox1.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 460);
+            this.ClientSize = new System.Drawing.Size(850, 509);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -626,6 +645,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label15;
     }
 }
 
