@@ -5,16 +5,18 @@ namespace MeasureComplexInterface
 {
     public class ScriptData
     {
+        public const string PythonPath = "C:/Program Files/Python35/python.exe";
+
         public string Response { get; private set; }
         public string ScriptPath { get; private set; }
         public string Arguments { get; set; }
-        public string PythonPath => "C:/Program Files/Python35/python.exe";
 
         public ScriptData(string scriptPath, string args)
         {
             ScriptPath = scriptPath;
             Arguments = args;
         }
+
         public string GetData(int devType)
         {
             var response = string.Empty;

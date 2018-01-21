@@ -7,14 +7,11 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MeasureComplexInterface.Data;
+using MeasureComplexInterface.Data.Entities;
 
 namespace MeasureComplexInterface
 {
-    enum ChartType
-    {
-        PowerFreq,
-        TorqueFreq
-    }
     public partial class Form1 : Form
     {
         bool InProcess { get; set; }
@@ -60,6 +57,7 @@ namespace MeasureComplexInterface
                 
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
+
                 if (!test)
                 {
                     outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
@@ -106,16 +104,19 @@ namespace MeasureComplexInterface
                 {
                     case ChartType.PowerFreq:
                         series.BorderWidth = 3;
-                        var valX = Convert.ToDouble(OutUT372);
+                        var valX = Convert.ToDouble(outMulti.Text);
                         var valY = Convert.ToDouble(OuputTurbinePower);
-                        series.Points.AddXY(valX, valY);
+                        series.Points.AddXY(valX, valY);                       
                         break;
                     case ChartType.TorqueFreq:
-                        valX = Convert.ToDouble(OutUT372);
+                        valX = Convert.ToDouble(outMulti.Text);
                         valY = Convert.ToDouble(OutBreakoutTorque);
-                        series.Points.AddXY(OutUT372, OutBreakoutTorque);
+                        series.Points.AddXY(valX,valY);
                         break;
                 }
+            series.LegendText = string.Format("Wind speed = {0}", WindSpeed);
+            if (chart.Series.Contains(series))
+                chart.Series[series.Name] = series;
             chart.Series.Add(series);
         }
 
@@ -134,24 +135,14 @@ namespace MeasureComplexInterface
             }
             return bHandled;
         }
-        private void rButtonPowerWind_CheckedChanged(object sender, EventArgs e)
-        {   
-            if(rButtonPowerWind.Checked)
-                rButtonTorqueWind.Checked = false;
-            rButtonPowerWind.Checked = true;
-        }
-
-        private void rButtonTorqueWind_CheckedChanged(object sender, EventArgs e)
-        {
-            if(rButtonTorqueWind.Checked)
-                rButtonPowerWind.Checked = false;
-            rButtonTorqueWind.Checked = true;
-        }
 
         private void buttonShowChart_Click(object sender, EventArgs e)
         {
             var arg = rButtonPowerWind.Checked ? ChartType.PowerFreq : ChartType.TorqueFreq;
-            CreateChart(arg);
+            if (test)
+                CreateChart(arg);
+            else
+                MessageBox.Show("App is in test mode now.");
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -186,39 +177,6 @@ namespace MeasureComplexInterface
             GetData(e.SignalTime, c++);
         }
 
-        private void textBoxTurbineDiameter_TextChanged(object sender, EventArgs e)
-        {
-            Turbine.Diameter = ((TextBox)sender).Text;
-        }
-
-        private void comboBoxRotorType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Turbine.RotorType = ((ComboBox)sender).SelectedItem.ToString();
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            SamplingRate = Convert.ToInt32(((NumericUpDown)sender).Value);
-        }
-
-        private void textBoxVaneWidth_TextChanged(object sender, EventArgs e)
-        {
-            Turbine.VaneWidth = ((TextBox)sender).Text;
-        }
-
-        private void textBoxVaneHeight_TextChanged(object sender, EventArgs e)
-        {
-            Turbine.VaneHeight = ((TextBox)sender).Text;
-        }
-
-        private void checkBoxLog_CheckedChanged(object sender, EventArgs e)
-        {
-            if(((CheckBox)sender).Checked)
-            {
-
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             chart.Series.Clear();
@@ -244,17 +202,6 @@ namespace MeasureComplexInterface
             test = true;
             c = 0;
             buttonStart.PerformClick();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GC.Collect();
-            Environment.Exit(-1);
-        }
-
-        private void textBoxWindSpeed_TextChanged(object sender, EventArgs e)
-        {
-            WindSpeed = Convert.ToDouble(textBoxWindSpeed.Text);
         }
     }
 }
