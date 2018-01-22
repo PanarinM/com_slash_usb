@@ -38,38 +38,38 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonStart = new System.Windows.Forms.Button();
             this.LabelSamplingTime = new System.Windows.Forms.Label();
-            this.outMulti = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.outTacho = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonShowChart = new System.Windows.Forms.Button();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.outPerfRate = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.outDT = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.outTorque = new System.Windows.Forms.Label();
-            this.outPower = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.outPS = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBoxTurbineDiameter = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.rButtonTorqueWind = new System.Windows.Forms.RadioButton();
             this.rButtonPowerWind = new System.Windows.Forms.RadioButton();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBoxTurbineDiameter = new System.Windows.Forms.TextBox();
             this.textBoxVaneHeight = new System.Windows.Forms.TextBox();
             this.comboBoxRotorType = new System.Windows.Forms.ComboBox();
             this.textBoxVaneWidth = new System.Windows.Forms.TextBox();
+            this.outPerfRate = new System.Windows.Forms.Label();
+            this.outDT = new System.Windows.Forms.Label();
+            this.outTorque = new System.Windows.Forms.Label();
+            this.outPower = new System.Windows.Forms.Label();
+            this.outPS = new System.Windows.Forms.Label();
+            this.outTacho = new System.Windows.Forms.Label();
+            this.outMulti = new System.Windows.Forms.Label();
             this.textBoxWindSpeed = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBoxPSCOM = new System.Windows.Forms.ComboBox();
@@ -153,15 +153,6 @@
             this.LabelSamplingTime.TabIndex = 0;
             this.LabelSamplingTime.Text = "Период семплирования:";
             // 
-            // outMulti
-            // 
-            this.outMulti.AutoSize = true;
-            this.outMulti.Location = new System.Drawing.Point(108, 35);
-            this.outMulti.Name = "outMulti";
-            this.outMulti.Size = new System.Drawing.Size(31, 13);
-            this.outMulti.TabIndex = 9;
-            this.outMulti.Text = "0 mV";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -170,15 +161,6 @@
             this.label6.Size = new System.Drawing.Size(52, 13);
             this.label6.TabIndex = 8;
             this.label6.Text = "WE2107:";
-            // 
-            // outTacho
-            // 
-            this.outTacho.AutoSize = true;
-            this.outTacho.Location = new System.Drawing.Point(108, 16);
-            this.outTacho.Name = "outTacho";
-            this.outTacho.Size = new System.Drawing.Size(40, 13);
-            this.outTacho.TabIndex = 7;
-            this.outTacho.Text = "0 RPM";
             // 
             // label4
             // 
@@ -238,15 +220,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Вывод:";
             // 
-            // outPerfRate
-            // 
-            this.outPerfRate.AutoSize = true;
-            this.outPerfRate.Location = new System.Drawing.Point(464, 35);
-            this.outPerfRate.Name = "outPerfRate";
-            this.outPerfRate.Size = new System.Drawing.Size(34, 13);
-            this.outPerfRate.TabIndex = 19;
-            this.outPerfRate.Text = "00.00";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -256,15 +229,6 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "Скорость считывания";
             // 
-            // outDT
-            // 
-            this.outDT.AutoSize = true;
-            this.outDT.Location = new System.Drawing.Point(464, 16);
-            this.outDT.Name = "outDT";
-            this.outDT.Size = new System.Drawing.Size(34, 13);
-            this.outDT.TabIndex = 17;
-            this.outDT.Text = "00.00";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -273,24 +237,6 @@
             this.label5.Size = new System.Drawing.Size(87, 13);
             this.label5.TabIndex = 16;
             this.label5.Text = "Текущее время";
-            // 
-            // outTorque
-            // 
-            this.outTorque.AutoSize = true;
-            this.outTorque.Location = new System.Drawing.Point(298, 35);
-            this.outTorque.Name = "outTorque";
-            this.outTorque.Size = new System.Drawing.Size(36, 13);
-            this.outTorque.TabIndex = 15;
-            this.outTorque.Text = "0 N*m";
-            // 
-            // outPower
-            // 
-            this.outPower.AutoSize = true;
-            this.outPower.Location = new System.Drawing.Point(299, 16);
-            this.outPower.Name = "outPower";
-            this.outPower.Size = new System.Drawing.Size(27, 13);
-            this.outPower.TabIndex = 14;
-            this.outPower.Text = "0 W";
             // 
             // label14
             // 
@@ -309,15 +255,6 @@
             this.label13.Size = new System.Drawing.Size(98, 13);
             this.label13.TabIndex = 12;
             this.label13.Text = "Мощность ротора";
-            // 
-            // outPS
-            // 
-            this.outPS.AutoSize = true;
-            this.outPS.Location = new System.Drawing.Point(108, 53);
-            this.outPS.Name = "outPS";
-            this.outPS.Size = new System.Drawing.Size(22, 13);
-            this.outPS.TabIndex = 11;
-            this.outPS.Text = "0 g";
             // 
             // label11
             // 
@@ -382,15 +319,6 @@
             this.label12.Size = new System.Drawing.Size(94, 13);
             this.label12.TabIndex = 10;
             this.label12.Text = "Профиль ротора:";
-            // 
-            // textBoxTurbineDiameter
-            // 
-            this.textBoxTurbineDiameter.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorDiameter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBoxTurbineDiameter.Location = new System.Drawing.Point(124, 125);
-            this.textBoxTurbineDiameter.Name = "textBoxTurbineDiameter";
-            this.textBoxTurbineDiameter.Size = new System.Drawing.Size(103, 20);
-            this.textBoxTurbineDiameter.TabIndex = 8;
-            this.textBoxTurbineDiameter.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorDiameter;
             // 
             // label10
             // 
@@ -460,6 +388,15 @@
             this.comboBox1.TabIndex = 9;
             this.comboBox1.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorProfile;
             // 
+            // textBoxTurbineDiameter
+            // 
+            this.textBoxTurbineDiameter.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorDiameter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxTurbineDiameter.Location = new System.Drawing.Point(124, 125);
+            this.textBoxTurbineDiameter.Name = "textBoxTurbineDiameter";
+            this.textBoxTurbineDiameter.Size = new System.Drawing.Size(103, 20);
+            this.textBoxTurbineDiameter.TabIndex = 8;
+            this.textBoxTurbineDiameter.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorDiameter;
+            // 
             // textBoxVaneHeight
             // 
             this.textBoxVaneHeight.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "VaneHeight", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -491,6 +428,76 @@
             this.textBoxVaneWidth.Size = new System.Drawing.Size(103, 20);
             this.textBoxVaneWidth.TabIndex = 4;
             this.textBoxVaneWidth.Text = global::MeasureComplexInterface.Properties.Settings.Default.VaneWidth;
+            // 
+            // outPerfRate
+            // 
+            this.outPerfRate.AutoSize = true;
+            this.outPerfRate.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "Performance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outPerfRate.Location = new System.Drawing.Point(464, 35);
+            this.outPerfRate.Name = "outPerfRate";
+            this.outPerfRate.Size = new System.Drawing.Size(0, 13);
+            this.outPerfRate.TabIndex = 19;
+            this.outPerfRate.Text = global::MeasureComplexInterface.Properties.Settings.Default.Performance;
+            // 
+            // outDT
+            // 
+            this.outDT.AutoSize = true;
+            this.outDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutCurrentTime", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outDT.Location = new System.Drawing.Point(464, 16);
+            this.outDT.Name = "outDT";
+            this.outDT.Size = new System.Drawing.Size(0, 13);
+            this.outDT.TabIndex = 17;
+            this.outDT.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutCurrentTime;
+            // 
+            // outTorque
+            // 
+            this.outTorque.AutoSize = true;
+            this.outTorque.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutTorque", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outTorque.Location = new System.Drawing.Point(298, 35);
+            this.outTorque.Name = "outTorque";
+            this.outTorque.Size = new System.Drawing.Size(0, 13);
+            this.outTorque.TabIndex = 15;
+            this.outTorque.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutTorque;
+            // 
+            // outPower
+            // 
+            this.outPower.AutoSize = true;
+            this.outPower.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutRotorPower", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outPower.Location = new System.Drawing.Point(299, 16);
+            this.outPower.Name = "outPower";
+            this.outPower.Size = new System.Drawing.Size(0, 13);
+            this.outPower.TabIndex = 14;
+            this.outPower.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutRotorPower;
+            // 
+            // outPS
+            // 
+            this.outPS.AutoSize = true;
+            this.outPS.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutWE2107", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outPS.Location = new System.Drawing.Point(108, 53);
+            this.outPS.Name = "outPS";
+            this.outPS.Size = new System.Drawing.Size(0, 13);
+            this.outPS.TabIndex = 11;
+            this.outPS.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutWE2107;
+            // 
+            // outTacho
+            // 
+            this.outTacho.AutoSize = true;
+            this.outTacho.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutUT372", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outTacho.Location = new System.Drawing.Point(108, 16);
+            this.outTacho.Name = "outTacho";
+            this.outTacho.Size = new System.Drawing.Size(0, 13);
+            this.outTacho.TabIndex = 7;
+            this.outTacho.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutUT372;
+            // 
+            // outMulti
+            // 
+            this.outMulti.AutoSize = true;
+            this.outMulti.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutUT61b", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.outMulti.Location = new System.Drawing.Point(108, 35);
+            this.outMulti.Name = "outMulti";
+            this.outMulti.Size = new System.Drawing.Size(0, 13);
+            this.outMulti.TabIndex = 9;
+            this.outMulti.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutUT61b;
             // 
             // textBoxWindSpeed
             // 

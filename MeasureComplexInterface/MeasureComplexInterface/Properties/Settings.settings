@@ -29,7 +29,7 @@
     <Setting Name="RotorDiameter" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="OutUT372" Type="System.String" Scope="User">
+    <Setting Name="OutUT372" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutUT61b" Type="System.String" Scope="User">
@@ -44,7 +44,7 @@
     <Setting Name="OutTorque" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="OutCurrentTime" Type="System.DateTime" Scope="User">
+    <Setting Name="OutCurrentTime" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Performance" Type="System.String" Scope="User">

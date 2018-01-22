@@ -131,15 +131,12 @@ namespace MeasureComplexInterface.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string OutUT372 {
             get {
                 return ((string)(this["OutUT372"]));
-            }
-            set {
-                this["OutUT372"] = value;
             }
         }
         
@@ -193,9 +190,10 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime OutCurrentTime {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OutCurrentTime {
             get {
-                return ((global::System.DateTime)(this["OutCurrentTime"]));
+                return ((string)(this["OutCurrentTime"]));
             }
             set {
                 this["OutCurrentTime"] = value;

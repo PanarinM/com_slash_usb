@@ -16,7 +16,7 @@ namespace MeasureComplexInterface
     public partial class Form1 : Form
     {
         bool InProcess { get; set; }
-
+        int c = 0;
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
@@ -29,8 +29,9 @@ namespace MeasureComplexInterface
         public Form1()
         {
             InitializeComponent();
+            Settings.Default.PropertyChanged += (sender, e) => Settings.Default.Save();
             chart.Series.Clear();
-            get_text(0);
+            //get_text(0);
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer
             {
@@ -40,46 +41,6 @@ namespace MeasureComplexInterface
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", Settings.Default.WE2107COM);
             MultiData = new ScriptData("../../../../ut61b.py", Settings.Default.UT61bCOM);
-        }
-        bool test = false;
-        void GetData(DateTime currentTime, int tick)
-        {
-            if (InProcess)
-            {
-                
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-
-                if (!test)
-                {
-                    outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
-                    outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
-                    outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
-                }
-                else
-                {
-                    var shtoto = get_text(tick);
-                    if (tick >= Convert.ToInt32(shtoto.Last()))
-                    {
-                        tmr.Enabled = false;
-                        InProcess = !InProcess;
-                        return;
-                    }
-                    outTacho.Invoke(new MethodInvoker(() => outTacho.Text = shtoto[0]));
-                    outPS.Invoke(new MethodInvoker(() => outPS.Text = shtoto[1]));
-                    outMulti.Invoke(new MethodInvoker(() => outMulti.Text = shtoto[2]));
-                }
-                    var perf = sw.ElapsedMilliseconds;
-                sw.Stop();
-                outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
-                outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
-                PerfHistory.Add((int)perf);
-                    chart.Invoke(new MethodInvoker(() => chart.Series.Last().Points.AddXY(PerfHistory.Count,(int)perf)));
-
-                Thread.Sleep(Convert.ToInt32(Settings.Default.SamplingRate * 1000));
-                GetData(DateTime.Now, ++tick);
-            }
-
         }
 
         void CreateChart(ChartType chartType)
@@ -116,24 +77,11 @@ namespace MeasureComplexInterface
             var ports = SerialPort.GetPortNames();
             comboBoxMultiCOM.DataSource = comboBoxPSCOM.DataSource = ports;
         }
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            var bHandled = false;
-            if (keyData == Keys.F5)
-            {
-                Refresh();
-                bHandled = true;
-            }
-            return bHandled;
-        }
 
         private void buttonShowChart_Click(object sender, EventArgs e)
         {
             var arg = rButtonPowerWind.Checked ? ChartType.PowerFreq : ChartType.TorqueFreq;
-            if (test)
-                CreateChart(arg);
-            else
-                MessageBox.Show("App is in test mode now.");
+             //   CreateChart(arg);
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -162,9 +110,9 @@ namespace MeasureComplexInterface
                 "0.13"
             });
         }
-        int c = 0;
         private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
             GetData(e.SignalTime, c++);
         }
 
@@ -172,20 +120,66 @@ namespace MeasureComplexInterface
         {
             chart.Series.Clear();
         }
+        void GetData(DateTime currentTime, int tick)
+        {
+            if (InProcess)
+            {
 
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
+
+                outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
+                outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
+                outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
+
+                /*               var shtoto = get_text(tick);
+                               if (tick >= Convert.ToInt32(shtoto.Last()))
+                               {
+                                   tmr.Enabled = false;
+                                   InProcess = !InProcess;
+                                   return;
+                               }
+                               outTacho.Invoke(new MethodInvoker(() => outTacho.Text = shtoto[0]));
+                               outPS.Invoke(new MethodInvoker(() => outPS.Text = shtoto[1]));
+                               outMulti.Invoke(new MethodInvoker(() => outMulti.Text = shtoto[2]));*/
+
+                var perf = sw.ElapsedMilliseconds;
+                sw.Stop();
+                outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
+                outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
+                PerfHistory.Add((int)perf);
+               // chart.Invoke(new MethodInvoker(() => chart.Series.Last().Points.AddXY(PerfHistory.Count, (int)perf)));
+
+                Thread.Sleep(Convert.ToInt32(Settings.Default.SamplingRate * 1000));
+                GetData(DateTime.Now, ++tick);
+            }
+        }
         private string[] get_text(int count)
         {
             string[][] filelist;
             string[] file = File.ReadAllLines("../../test.txt");
-            string[] result = new string[file.Count()+1];
+            string[] result = new string[file.Count() + 1];
             filelist = new string[file.Length][];
             for (var f = 0; f < file.Length; f++)
             {
                 filelist[f] = file[f].Split(',');
                 result[f] = filelist[f][count];
                 result[file.Count()] = filelist[f].Count().ToString();
-            }            
+            }
             return result;
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            var bHandled = false;
+            if (keyData == Keys.F5)
+            {
+                Refresh();
+                bHandled = true;
+            }
+            return bHandled;
+        }
+
     }
-}
+}        
+
