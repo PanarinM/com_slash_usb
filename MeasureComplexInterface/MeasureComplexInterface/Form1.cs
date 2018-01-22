@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MeasureComplexInterface.Data;
 using MeasureComplexInterface.Data.Entities;
+using MeasureComplexInterface.Properties;
 
 namespace MeasureComplexInterface
 {
@@ -20,16 +21,7 @@ namespace MeasureComplexInterface
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
         public ScriptData MultiData { get; set; }
-
-        public int SamplingRate { get; set; } = 1;
-        public double WindSpeed { get; set; }
-        public string WE2107COM { get; set; }
-        public string UT61bCOM { get; set; }
-        public string OutUT372 { get; set; }
-        public string OutUT61b { get; set; }
-        public string OuputTurbinePower { get; set; }
-        public string OutBreakoutTorque { get; set; }
-
+            
         public List<int> PerfHistory { get; set; } = new List<int>();
         DateTime LogStart;
         System.Timers.Timer tmr;
@@ -46,8 +38,8 @@ namespace MeasureComplexInterface
             };
             tmr.Elapsed += Tmr_Elapsed;
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
-            WE2107Data = new ScriptData("../../../../serial_read.py", WE2107COM);
-            MultiData = new ScriptData("../../../../ut61b.py", UT61bCOM);
+            WE2107Data = new ScriptData("../../../../serial_read.py", Settings.Default.WE2107COM);
+            MultiData = new ScriptData("../../../../ut61b.py", Settings.Default.UT61bCOM);
         }
         bool test = false;
         void GetData(DateTime currentTime, int tick)
@@ -82,10 +74,9 @@ namespace MeasureComplexInterface
                 outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
                 outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
                 PerfHistory.Add((int)perf);
-                if(checkBoxLog.Checked)
                     chart.Invoke(new MethodInvoker(() => chart.Series.Last().Points.AddXY(PerfHistory.Count,(int)perf)));
 
-                Thread.Sleep(SamplingRate * 1000);
+                Thread.Sleep(Convert.ToInt32(Settings.Default.SamplingRate * 1000));
                 GetData(DateTime.Now, ++tick);
             }
 
@@ -96,7 +87,7 @@ namespace MeasureComplexInterface
             var series = new Series()
             {
                 ChartType = SeriesChartType.Spline,
-                Name = string.Format("V = {0}", WindSpeed.ToString())
+                Name = string.Format("V = {0} m/s", Settings.Default.WindSpeed.ToString())
             };
 
             for (var i = 0; i < PerfHistory.Count; i++)
@@ -105,16 +96,16 @@ namespace MeasureComplexInterface
                     case ChartType.PowerFreq:
                         series.BorderWidth = 3;
                         var valX = Convert.ToDouble(outMulti.Text);
-                        var valY = Convert.ToDouble(OuputTurbinePower);
+                        var valY = Convert.ToDouble(Settings.Default.OutRotorPower);
                         series.Points.AddXY(valX, valY);                       
                         break;
                     case ChartType.TorqueFreq:
                         valX = Convert.ToDouble(outMulti.Text);
-                        valY = Convert.ToDouble(OutBreakoutTorque);
+                        valY = Convert.ToDouble(Settings.Default.OutTorque);
                         series.Points.AddXY(valX,valY);
                         break;
                 }
-            series.LegendText = string.Format("Wind speed = {0}", WindSpeed);
+            series.LegendText = string.Format("Wind speed = {0} m/s", Settings.Default.WindSpeed);
             if (chart.Series.Contains(series))
                 chart.Series[series.Name] = series;
             chart.Series.Add(series);
@@ -195,13 +186,6 @@ namespace MeasureComplexInterface
                 result[file.Count()] = filelist[f].Count().ToString();
             }            
             return result;
-        }
-
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            test = true;
-            c = 0;
-            buttonStart.PerformClick();
         }
     }
 }

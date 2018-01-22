@@ -32,14 +32,10 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxWindSpeed = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.checkBoxLog = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.comboBoxMultiCOM = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxPSCOM = new System.Windows.Forms.ComboBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.LabelSamplingTime = new System.Windows.Forms.Label();
             this.outMulti = new System.Windows.Forms.Label();
@@ -60,37 +56,35 @@
             this.outPS = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBoxRotorType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBoxVaneWidth = new System.Windows.Forms.TextBox();
-            this.textBoxVaneHeight = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBoxTurbineDiameter = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.rButtonTorqueWind = new System.Windows.Forms.RadioButton();
             this.rButtonPowerWind = new System.Windows.Forms.RadioButton();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBoxVaneHeight = new System.Windows.Forms.TextBox();
+            this.comboBoxRotorType = new System.Windows.Forms.ComboBox();
+            this.textBoxVaneWidth = new System.Windows.Forms.TextBox();
+            this.textBoxWindSpeed = new System.Windows.Forms.TextBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.comboBoxPSCOM = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBoxWindSpeed);
             this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.checkBoxLog);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.comboBoxMultiCOM);
             this.groupBox1.Controls.Add(this.label2);
@@ -98,19 +92,12 @@
             this.groupBox1.Controls.Add(this.comboBoxPSCOM);
             this.groupBox1.Controls.Add(this.buttonStart);
             this.groupBox1.Controls.Add(this.LabelSamplingTime);
-            this.groupBox1.Location = new System.Drawing.Point(595, 34);
+            this.groupBox1.Location = new System.Drawing.Point(595, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(243, 157);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки";
-            // 
-            // textBoxWindSpeed
-            // 
-            this.textBoxWindSpeed.Location = new System.Drawing.Point(163, 100);
-            this.textBoxWindSpeed.Name = "textBoxWindSpeed";
-            this.textBoxWindSpeed.Size = new System.Drawing.Size(74, 20);
-            this.textBoxWindSpeed.TabIndex = 17;
             // 
             // label15
             // 
@@ -120,40 +107,6 @@
             this.label15.Size = new System.Drawing.Size(87, 13);
             this.label15.TabIndex = 16;
             this.label15.Text = "Скорость ветра";
-            // 
-            // checkBoxLog
-            // 
-            this.checkBoxLog.AutoSize = true;
-            this.checkBoxLog.Location = new System.Drawing.Point(9, 130);
-            this.checkBoxLog.Name = "checkBoxLog";
-            this.checkBoxLog.Size = new System.Drawing.Size(95, 17);
-            this.checkBoxLog.TabIndex = 15;
-            this.checkBoxLog.Text = "Отображение";
-            this.checkBoxLog.UseVisualStyleBackColor = true;
-            this.checkBoxLog.CheckedChanged += new System.EventHandler(this.checkBoxLog_CheckedChanged);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(163, 20);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            1488,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown1.TabIndex = 14;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // comboBoxMultiCOM
             // 
@@ -181,19 +134,11 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "WE2107 COM порт:";
             // 
-            // comboBoxPSCOM
-            // 
-            this.comboBoxPSCOM.FormattingEnabled = true;
-            this.comboBoxPSCOM.Location = new System.Drawing.Point(163, 46);
-            this.comboBoxPSCOM.Name = "comboBoxPSCOM";
-            this.comboBoxPSCOM.Size = new System.Drawing.Size(74, 21);
-            this.comboBoxPSCOM.TabIndex = 10;
-            // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(163, 126);
+            this.buttonStart.Location = new System.Drawing.Point(57, 126);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(74, 23);
+            this.buttonStart.Size = new System.Drawing.Size(142, 23);
             this.buttonStart.TabIndex = 4;
             this.buttonStart.Text = "Пуск";
             this.buttonStart.UseVisualStyleBackColor = true;
@@ -246,9 +191,9 @@
             // 
             // buttonShowChart
             // 
-            this.buttonShowChart.Location = new System.Drawing.Point(6, 65);
+            this.buttonShowChart.Location = new System.Drawing.Point(6, 62);
             this.buttonShowChart.Name = "buttonShowChart";
-            this.buttonShowChart.Size = new System.Drawing.Size(104, 25);
+            this.buttonShowChart.Size = new System.Drawing.Size(112, 25);
             this.buttonShowChart.TabIndex = 1;
             this.buttonShowChart.Text = "Показать график";
             this.buttonShowChart.UseVisualStyleBackColor = true;
@@ -260,7 +205,7 @@
             this.chart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(12, 34);
+            this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -286,9 +231,9 @@
             this.groupBox3.Controls.Add(this.outTacho);
             this.groupBox3.Controls.Add(this.outMulti);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(12, 370);
+            this.groupBox3.Location = new System.Drawing.Point(12, 348);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(507, 118);
+            this.groupBox3.Size = new System.Drawing.Size(577, 96);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Вывод:";
@@ -392,19 +337,6 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "Тип ротора";
             // 
-            // comboBoxRotorType
-            // 
-            this.comboBoxRotorType.FormattingEnabled = true;
-            this.comboBoxRotorType.Items.AddRange(new object[] {
-            "Дарье",
-            "Савониуса",
-            "Комбинированный"});
-            this.comboBoxRotorType.Location = new System.Drawing.Point(124, 19);
-            this.comboBoxRotorType.Name = "comboBoxRotorType";
-            this.comboBoxRotorType.Size = new System.Drawing.Size(103, 21);
-            this.comboBoxRotorType.TabIndex = 2;
-            this.comboBoxRotorType.SelectedIndexChanged += new System.EventHandler(this.comboBoxRotorType_SelectedIndexChanged);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -413,22 +345,6 @@
             this.label8.Size = new System.Drawing.Size(90, 13);
             this.label8.TabIndex = 3;
             this.label8.Text = "Длинна лопасти";
-            // 
-            // textBoxVaneWidth
-            // 
-            this.textBoxVaneWidth.Location = new System.Drawing.Point(156, 73);
-            this.textBoxVaneWidth.Name = "textBoxVaneWidth";
-            this.textBoxVaneWidth.Size = new System.Drawing.Size(71, 20);
-            this.textBoxVaneWidth.TabIndex = 4;
-            this.textBoxVaneWidth.TextChanged += new System.EventHandler(this.textBoxVaneWidth_TextChanged);
-            // 
-            // textBoxVaneHeight
-            // 
-            this.textBoxVaneHeight.Location = new System.Drawing.Point(156, 99);
-            this.textBoxVaneHeight.Name = "textBoxVaneHeight";
-            this.textBoxVaneHeight.Size = new System.Drawing.Size(71, 20);
-            this.textBoxVaneHeight.TabIndex = 6;
-            this.textBoxVaneHeight.TextChanged += new System.EventHandler(this.textBoxVaneHeight_TextChanged);
             // 
             // label9
             // 
@@ -451,7 +367,7 @@
             this.groupBox4.Controls.Add(this.textBoxVaneWidth);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Location = new System.Drawing.Point(595, 197);
+            this.groupBox4.Location = new System.Drawing.Point(595, 176);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(243, 166);
             this.groupBox4.TabIndex = 12;
@@ -467,25 +383,14 @@
             this.label12.TabIndex = 10;
             this.label12.Text = "Профиль ротора:";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Дарье",
-            "Савониуса",
-            "Комбинированный"});
-            this.comboBox1.Location = new System.Drawing.Point(124, 46);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(103, 21);
-            this.comboBox1.TabIndex = 9;
-            // 
             // textBoxTurbineDiameter
             // 
-            this.textBoxTurbineDiameter.Location = new System.Drawing.Point(156, 125);
+            this.textBoxTurbineDiameter.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorDiameter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxTurbineDiameter.Location = new System.Drawing.Point(124, 125);
             this.textBoxTurbineDiameter.Name = "textBoxTurbineDiameter";
-            this.textBoxTurbineDiameter.Size = new System.Drawing.Size(71, 20);
+            this.textBoxTurbineDiameter.Size = new System.Drawing.Size(103, 20);
             this.textBoxTurbineDiameter.TabIndex = 8;
-            this.textBoxTurbineDiameter.TextChanged += new System.EventHandler(this.textBoxTurbineDiameter_TextChanged);
+            this.textBoxTurbineDiameter.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorDiameter;
             // 
             // label10
             // 
@@ -502,18 +407,18 @@
             this.groupBox2.Controls.Add(this.rButtonTorqueWind);
             this.groupBox2.Controls.Add(this.rButtonPowerWind);
             this.groupBox2.Controls.Add(this.buttonShowChart);
-            this.groupBox2.Location = new System.Drawing.Point(525, 370);
+            this.groupBox2.Location = new System.Drawing.Point(595, 348);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(313, 118);
+            this.groupBox2.Size = new System.Drawing.Size(243, 96);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры графика:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(127, 65);
+            this.button1.Location = new System.Drawing.Point(124, 62);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 25);
+            this.button1.Size = new System.Drawing.Size(113, 25);
             this.button1.TabIndex = 4;
             this.button1.Text = "Очистить график";
             this.button1.UseVisualStyleBackColor = true;
@@ -522,69 +427,123 @@
             // rButtonTorqueWind
             // 
             this.rButtonTorqueWind.AutoSize = true;
-            this.rButtonTorqueWind.Location = new System.Drawing.Point(6, 19);
+            this.rButtonTorqueWind.Location = new System.Drawing.Point(6, 16);
             this.rButtonTorqueWind.Name = "rButtonTorqueWind";
             this.rButtonTorqueWind.Size = new System.Drawing.Size(218, 17);
             this.rButtonTorqueWind.TabIndex = 3;
             this.rButtonTorqueWind.TabStop = true;
             this.rButtonTorqueWind.Text = "График момента от угловой скорости";
             this.rButtonTorqueWind.UseVisualStyleBackColor = true;
-            this.rButtonTorqueWind.CheckedChanged += new System.EventHandler(this.rButtonTorqueWind_CheckedChanged);
             // 
             // rButtonPowerWind
             // 
             this.rButtonPowerWind.AutoSize = true;
-            this.rButtonPowerWind.Location = new System.Drawing.Point(6, 42);
+            this.rButtonPowerWind.Location = new System.Drawing.Point(6, 39);
             this.rButtonPowerWind.Name = "rButtonPowerWind";
             this.rButtonPowerWind.Size = new System.Drawing.Size(225, 17);
             this.rButtonPowerWind.TabIndex = 2;
             this.rButtonPowerWind.TabStop = true;
             this.rButtonPowerWind.Text = "График мощности от угловой скорости";
             this.rButtonPowerWind.UseVisualStyleBackColor = true;
-            this.rButtonPowerWind.CheckedChanged += new System.EventHandler(this.rButtonPowerWind_CheckedChanged);
             // 
-            // menuStrip1
+            // comboBox1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(850, 24);
-            this.menuStrip1.TabIndex = 15;
-            this.menuStrip1.Text = "menuStrip1";
+            this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorProfile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Дарье",
+            "Савониуса",
+            "Комбинированный"});
+            this.comboBox1.Location = new System.Drawing.Point(124, 46);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(103, 21);
+            this.comboBox1.TabIndex = 9;
+            this.comboBox1.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorProfile;
             // 
-            // testToolStripMenuItem
+            // textBoxVaneHeight
             // 
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.testToolStripMenuItem.Text = "Test";
-            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            this.textBoxVaneHeight.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "VaneHeight", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxVaneHeight.Location = new System.Drawing.Point(124, 99);
+            this.textBoxVaneHeight.Name = "textBoxVaneHeight";
+            this.textBoxVaneHeight.Size = new System.Drawing.Size(103, 20);
+            this.textBoxVaneHeight.TabIndex = 6;
+            this.textBoxVaneHeight.Text = global::MeasureComplexInterface.Properties.Settings.Default.VaneHeight;
             // 
-            // exitToolStripMenuItem
+            // comboBoxRotorType
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.comboBoxRotorType.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.comboBoxRotorType.FormattingEnabled = true;
+            this.comboBoxRotorType.Items.AddRange(new object[] {
+            "Дарье",
+            "Савониуса",
+            "Комбинированный"});
+            this.comboBoxRotorType.Location = new System.Drawing.Point(124, 19);
+            this.comboBoxRotorType.Name = "comboBoxRotorType";
+            this.comboBoxRotorType.Size = new System.Drawing.Size(103, 21);
+            this.comboBoxRotorType.TabIndex = 2;
+            this.comboBoxRotorType.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorType;
+            // 
+            // textBoxVaneWidth
+            // 
+            this.textBoxVaneWidth.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "VaneWidth", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxVaneWidth.Location = new System.Drawing.Point(124, 73);
+            this.textBoxVaneWidth.Name = "textBoxVaneWidth";
+            this.textBoxVaneWidth.Size = new System.Drawing.Size(103, 20);
+            this.textBoxVaneWidth.TabIndex = 4;
+            this.textBoxVaneWidth.Text = global::MeasureComplexInterface.Properties.Settings.Default.VaneWidth;
+            // 
+            // textBoxWindSpeed
+            // 
+            this.textBoxWindSpeed.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "WindSpeed", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxWindSpeed.Location = new System.Drawing.Point(163, 100);
+            this.textBoxWindSpeed.Name = "textBoxWindSpeed";
+            this.textBoxWindSpeed.Size = new System.Drawing.Size(74, 20);
+            this.textBoxWindSpeed.TabIndex = 17;
+            this.textBoxWindSpeed.Text = global::MeasureComplexInterface.Properties.Settings.Default.WindSpeed;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MeasureComplexInterface.Properties.Settings.Default, "SamplingRate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown1.Location = new System.Drawing.Point(163, 20);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1488,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown1.TabIndex = 14;
+            this.numericUpDown1.Value = global::MeasureComplexInterface.Properties.Settings.Default.SamplingRate;
+            // 
+            // comboBoxPSCOM
+            // 
+            this.comboBoxPSCOM.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "WE2107COM", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.comboBoxPSCOM.FormattingEnabled = true;
+            this.comboBoxPSCOM.Location = new System.Drawing.Point(163, 46);
+            this.comboBoxPSCOM.Name = "comboBoxPSCOM";
+            this.comboBoxPSCOM.Size = new System.Drawing.Size(74, 21);
+            this.comboBoxPSCOM.TabIndex = 10;
+            this.comboBoxPSCOM.Text = global::MeasureComplexInterface.Properties.Settings.Default.WE2107COM;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 494);
+            this.ClientSize = new System.Drawing.Size(850, 450);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.chart);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Measurement Complex Interface";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -592,10 +551,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -639,10 +596,6 @@
         private System.Windows.Forms.Label outPerfRate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBoxLog;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBoxWindSpeed;
