@@ -73,7 +73,7 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Darrier")]
         public string RotorType {
             get {
                 return ((string)(this["RotorType"]));
@@ -133,7 +133,7 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string OutUT372 {
             get {
                 return ((string)(this["OutUT372"]));
@@ -142,7 +142,7 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string OutUT61b {
             get {
                 return ((string)(this["OutUT61b"]));
@@ -154,7 +154,7 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string OutWE2107 {
             get {
                 return ((string)(this["OutWE2107"]));

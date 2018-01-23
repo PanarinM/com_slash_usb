@@ -228,7 +228,7 @@ if __name__ == '__main__':
         else:
             port = PORT
 
-        dmm = UT61B(PORT)
+        dmm = UT61B(port)
         meas = dmm.get_meas()
         sys.stdout.write(meas)
 

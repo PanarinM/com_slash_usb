@@ -23,7 +23,6 @@ namespace MeasureComplexInterface
         {
             List<string> result = new List<string>();        
             result.Clear();
-            sqlquery = "SELECT * FROM data WHERE \"date_time\" < '2017-03-30 11:50:00';";
             using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(sqlquery, npgsqlConnection))            
             using (NpgsqlCommand cmd = new NpgsqlCommand(sqlquery, npgsqlConnection))                
             using (NpgsqlDataReader reader = cmd.ExecuteReader())

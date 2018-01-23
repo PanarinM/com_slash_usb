@@ -31,12 +31,11 @@ namespace MeasureComplexInterface
             InitializeComponent();
             Settings.Default.PropertyChanged += (sender, e) => Settings.Default.Save();
             chart.Series.Clear();
+            
             //get_text(0);
             Turbine = new TurbineData();
-            tmr = new System.Timers.Timer
-            {
-                AutoReset = false
-            };
+            tmr = new System.Timers.Timer();
+            tmr.AutoReset = false;
             tmr.Elapsed += Tmr_Elapsed;
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
             WE2107Data = new ScriptData("../../../../serial_read.py", Settings.Default.WE2107COM);
@@ -45,6 +44,10 @@ namespace MeasureComplexInterface
 
         void CreateChart(ChartType chartType)
         {
+            DatabaseConnect dconn = new DatabaseConnect();
+            var query = string.Format("SELECT * FROM data WHERE \"date_time\" > '{0}';", LogStart.ToString("yyyy-MM-dd HH:mm:ss"));
+            List<string> lst = dconn.SelectQuery(query);
+            SetComLists();
             var series = new Series()
             {
                 ChartType = SeriesChartType.Spline,
@@ -81,7 +84,7 @@ namespace MeasureComplexInterface
         private void buttonShowChart_Click(object sender, EventArgs e)
         {
             var arg = rButtonPowerWind.Checked ? ChartType.PowerFreq : ChartType.TorqueFreq;
-             //   CreateChart(arg);
+            CreateChart(arg);
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -100,14 +103,13 @@ namespace MeasureComplexInterface
             }
             InProcess = !InProcess;
             DatabaseConnect dconn = new DatabaseConnect();
-            List<string> lst = dconn.SelectQuery("");
-            var a = dconn.UpdateRotorInfo(new string[]
+            dconn.UpdateRotorInfo(new string[]
             {
-                "Darrieus",
-                "2",
-                "2",
-                "8",
-                "0.13"
+                Settings.Default.RotorType,
+                Settings.Default.VaneWidth,
+                Settings.Default.VaneHeight,
+                Settings.Default.RotorDiameter,
+                Settings.Default.RotorProfile
             });
         }
         private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -124,38 +126,49 @@ namespace MeasureComplexInterface
         {
             if (InProcess)
             {
-
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-
-
                 outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
                 outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
                 outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
-
-                /*               var shtoto = get_text(tick);
-                               if (tick >= Convert.ToInt32(shtoto.Last()))
-                               {
-                                   tmr.Enabled = false;
-                                   InProcess = !InProcess;
-                                   return;
-                               }
-                               outTacho.Invoke(new MethodInvoker(() => outTacho.Text = shtoto[0]));
-                               outPS.Invoke(new MethodInvoker(() => outPS.Text = shtoto[1]));
-                               outMulti.Invoke(new MethodInvoker(() => outMulti.Text = shtoto[2]));*/
-
                 var perf = sw.ElapsedMilliseconds;
                 sw.Stop();
+
                 outDT.Invoke(new MethodInvoker(() => outDT.Text = currentTime.ToString("hh:mm:ss:fff")));
                 outPerfRate.Invoke(new MethodInvoker(() => outPerfRate.Text = perf.ToString() + "ms"));
                 PerfHistory.Add((int)perf);
-               // chart.Invoke(new MethodInvoker(() => chart.Series.Last().Points.AddXY(PerfHistory.Count, (int)perf)));
+                outPower.Invoke(new MethodInvoker(() => outPower.Text = Calculate("power")));
+                outTorque.Invoke(new MethodInvoker(() => outTorque.Text = Calculate("torque")));
 
                 Thread.Sleep(Convert.ToInt32(Settings.Default.SamplingRate * 1000));
                 GetData(DateTime.Now, ++tick);
             }
         }
-        private string[] get_text(int count)
+        string Calculate(string param)
+        {          
+            var Response = string.Empty;
+            var ScriptPath = "../../../../power_calc.py";
+            ProcessStartInfo start = new ProcessStartInfo
+            {
+                FileName = ScriptData.PythonPath,
+                Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, string.Concat(outMulti.Text,outPS.Text,Settings.Default.RotorDiameter)),
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
+                    Response = reader.ReadToEnd();
+                }
+            }
+            return Response;
+            
+        }
+       /* private string[] get_text(int count)
         {
             string[][] filelist;
             string[] file = File.ReadAllLines("../../test.txt");
@@ -168,7 +181,7 @@ namespace MeasureComplexInterface
                 result[file.Count()] = filelist[f].Count().ToString();
             }
             return result;
-        }
+        //}*/
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             var bHandled = false;

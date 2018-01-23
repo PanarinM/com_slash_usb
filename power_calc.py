@@ -10,21 +10,21 @@ class PowerCalc(object):
     k = Decimal(g/1000)
 
     def __init__(self, rpm, force, arm):
-        self.rpm = Decimal(rpm) #частота вращения
-        self.force = Decimal(force) # сила в г
-        self.arm = Decimal(arm) # плечо силы в метрах
+        self.rpm = Decimal(rpm)
+        self.force = Decimal(force)
+        self.arm = Decimal(arm)
 
     def frequency(self):
-        return (self.pi/30)*self.rpm # угловая скорость в радианах на секунду
+        return (self.pi/30)*self.rpm
 
     def conv_force(self):
-        return self.k * self.force #сила, Н
+        return self.k * self.force
 
     def torque(self):
-        return self.conv_force() * self.arm # момент в Н*м
+        return self.conv_force() * self.arm
 
     def power(self):
-        return self.frequency()*self.torque() #мощность в Ваттах
+        return self.frequency()*self.torque()
 
 if __name__ == '__main__':
     rpm, force, arm = argv[1].split(',')
