@@ -20,7 +20,8 @@ namespace MeasureComplexInterface
         public TurbineData Turbine { get; set; }
         public ScriptData TachoData { get; set; }
         public ScriptData WE2107Data { get; set; }
-        public ScriptData MultiData { get; set; }
+        public ScriptData AmpData { get; set; }
+        public ScriptData VoltData { get; set; }
             
         public List<int> PerfHistory { get; set; } = new List<int>();
         DateTime LogStart;
@@ -31,15 +32,13 @@ namespace MeasureComplexInterface
             InitializeComponent();
             Settings.Default.PropertyChanged += (sender, e) => Settings.Default.Save();
             chart.Series.Clear();
-            
+            SetComLists();
             //get_text(0);
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer();
             tmr.AutoReset = false;
             tmr.Elapsed += Tmr_Elapsed;
-            TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
-            WE2107Data = new ScriptData("../../../../serial_read.py", Settings.Default.WE2107COM);
-            MultiData = new ScriptData("../../../../ut61b.py", Settings.Default.UT61bCOM);
+            
         }
 
         void CreateChart(ChartType chartType)
@@ -47,8 +46,7 @@ namespace MeasureComplexInterface
             DatabaseConnect dconn = new DatabaseConnect();
             var query = string.Format("SELECT * FROM data WHERE \"date_time\" > '{0}';", LogStart.ToString("yyyy-MM-dd HH:mm:ss"));
             List<string> lst = dconn.SelectQuery(query);
-            SetComLists();
-            var series = new Series()
+            var series = new Series
             {
                 ChartType = SeriesChartType.Spline,
                 Name = string.Format("V = {0} m/s", Settings.Default.WindSpeed.ToString())
@@ -59,12 +57,12 @@ namespace MeasureComplexInterface
                 {
                     case ChartType.PowerFreq:
                         series.BorderWidth = 3;
-                        var valX = Convert.ToDouble(outMulti.Text);
+                        var valX = Convert.ToDouble(outAmperage.Text);
                         var valY = Convert.ToDouble(Settings.Default.OutRotorPower);
                         series.Points.AddXY(valX, valY);                       
                         break;
                     case ChartType.TorqueFreq:
-                        valX = Convert.ToDouble(outMulti.Text);
+                        valX = Convert.ToDouble(outAmperage.Text);
                         valY = Convert.ToDouble(Settings.Default.OutTorque);
                         series.Points.AddXY(valX,valY);
                         break;
@@ -72,13 +70,16 @@ namespace MeasureComplexInterface
             series.LegendText = string.Format("Wind speed = {0} m/s", Settings.Default.WindSpeed);
             if (chart.Series.Contains(series))
                 chart.Series[series.Name] = series;
-            chart.Series.Add(series);
+            else
+                chart.Series.Add(series);
         }
 
         void SetComLists()
         {
             var ports = SerialPort.GetPortNames();
-            comboBoxMultiCOM.DataSource = comboBoxPSCOM.DataSource = ports;
+            comboBoxAmpCOM.DataSource = ports;
+            comboBoxVoltCOM.DataSource = ports;
+            comboBoxPSCOM.DataSource = ports;
         }
 
         private void buttonShowChart_Click(object sender, EventArgs e)
@@ -91,6 +92,7 @@ namespace MeasureComplexInterface
         {
             if (!InProcess)
             {
+                InitDevices();
                 buttonStart.Text = "Stop";
                 LogStart = DateTime.Now;
                 PerfHistory.Clear();
@@ -112,9 +114,17 @@ namespace MeasureComplexInterface
                 Settings.Default.RotorProfile
             });
         }
+
+        private void InitDevices()
+        {
+            TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
+            WE2107Data = new ScriptData("../../../../serial_read.py", comboBoxPSCOM.SelectedText);
+            AmpData = new ScriptData("../../../../ut61b.py", comboBoxAmpCOM.SelectedText);
+            VoltData = new ScriptData("../../../../ut61b.py", comboBoxVoltCOM.SelectedText);
+        }
+
         private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-
             GetData(e.SignalTime, c++);
         }
 
@@ -130,7 +140,8 @@ namespace MeasureComplexInterface
                 sw.Start();
                 outTacho.Invoke(new MethodInvoker(() => outTacho.Text = TachoData.GetData((int)DeviceDataType.UT372)));
                 outPS.Invoke(new MethodInvoker(() => outPS.Text = WE2107Data.GetData((int)DeviceDataType.WE2107)));
-                outMulti.Invoke(new MethodInvoker(() => outMulti.Text = MultiData.GetData((int)DeviceDataType.UT61b)));
+                outAmperage.Invoke(new MethodInvoker(() => outAmperage.Text = AmpData.GetData((int)DeviceDataType.UT61b)));
+                outVoltage.Invoke(new MethodInvoker(() => outVoltage.Text = VoltData.GetData((int)DeviceDataType.UT61b)));
                 var perf = sw.ElapsedMilliseconds;
                 sw.Stop();
 
@@ -144,6 +155,8 @@ namespace MeasureComplexInterface
                 GetData(DateTime.Now, ++tick);
             }
         }
+
+       
         string Calculate(string param)
         {          
             var Response = string.Empty;
@@ -151,7 +164,7 @@ namespace MeasureComplexInterface
             ProcessStartInfo start = new ProcessStartInfo
             {
                 FileName = ScriptData.PythonPath,
-                Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, string.Concat(outMulti.Text,outPS.Text,Settings.Default.RotorDiameter)),
+                Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, string.Concat(outAmperage.Text,outPS.Text,Settings.Default.RotorDiameter)),
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
@@ -168,20 +181,7 @@ namespace MeasureComplexInterface
             return Response;
             
         }
-       /* private string[] get_text(int count)
-        {
-            string[][] filelist;
-            string[] file = File.ReadAllLines("../../test.txt");
-            string[] result = new string[file.Count() + 1];
-            filelist = new string[file.Length][];
-            for (var f = 0; f < file.Length; f++)
-            {
-                filelist[f] = file[f].Split(',');
-                result[f] = filelist[f][count];
-                result[file.Count()] = filelist[f].Count().ToString();
-            }
-            return result;
-        //}*/
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             var bHandled = false;
@@ -193,6 +193,11 @@ namespace MeasureComplexInterface
             return bHandled;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GetData(DateTime.Now, 0);
+            MessageBox.Show("Labels updated!");
+        }
     }
 }        
 

@@ -5,17 +5,11 @@
     <Setting Name="SamplingRate" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="WE2107COM" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="UT61bCOM" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="WindSpeed" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RotorType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Darrier</Value>
+      <Value Profile="(Default)">Дарье</Value>
     </Setting>
     <Setting Name="RotorProfile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

@@ -37,30 +37,6 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WE2107COM {
-            get {
-                return ((string)(this["WE2107COM"]));
-            }
-            set {
-                this["WE2107COM"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UT61bCOM {
-            get {
-                return ((string)(this["UT61bCOM"]));
-            }
-            set {
-                this["UT61bCOM"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string WindSpeed {
             get {
@@ -73,7 +49,7 @@ namespace MeasureComplexInterface.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Darrier")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Дарье")]
         public string RotorType {
             get {
                 return ((string)(this["RotorType"]));
