@@ -1,6 +1,6 @@
 future==0.16.0
 psycopg2==2.7
 PyInstaller==3.2.1
-pypiwin32==219
+pypiwin32==220
 pyserial==3.2.1
 pywinusb==0.4.2
