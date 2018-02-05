@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -24,6 +23,15 @@ namespace MeasureComplexInterface
         public ScriptData VoltData { get; set; }
             
         public List<int> PerfHistory { get; set; } = new List<int>();
+        public object WindSpeed { get; private set; }
+        public object OutTorque { get; private set; }
+        public object OutRotorPower { get; private set; }
+        public string RotorType { get; private set; }
+        public string RotorDiameter { get; private set; }
+        public string RotorProfile { get; private set; }
+        public string VaneHeight { get; private set; }
+        public string VaneWidth { get; private set; }
+
         DateTime LogStart;
         System.Timers.Timer tmr;
 
@@ -33,12 +41,10 @@ namespace MeasureComplexInterface
             Settings.Default.PropertyChanged += (sender, e) => Settings.Default.Save();
             chart.Series.Clear();
             SetComLists();
-            //get_text(0);
             Turbine = new TurbineData();
             tmr = new System.Timers.Timer();
             tmr.AutoReset = false;
             tmr.Elapsed += Tmr_Elapsed;
-            
         }
 
         void CreateChart(ChartType chartType)
@@ -49,7 +55,7 @@ namespace MeasureComplexInterface
             var series = new Series
             {
                 ChartType = SeriesChartType.Spline,
-                Name = string.Format("V = {0} m/s", Settings.Default.WindSpeed.ToString())
+                Name = string.Format("V = {0} m/s", WindSpeed.ToString())
             };
 
             for (var i = 0; i < PerfHistory.Count; i++)
@@ -58,16 +64,16 @@ namespace MeasureComplexInterface
                     case ChartType.PowerFreq:
                         series.BorderWidth = 3;
                         var valX = Convert.ToDouble(outAmperage.Text);
-                        var valY = Convert.ToDouble(Settings.Default.OutRotorPower);
+                        var valY = Convert.ToDouble(OutRotorPower);
                         series.Points.AddXY(valX, valY);                       
                         break;
                     case ChartType.TorqueFreq:
                         valX = Convert.ToDouble(outAmperage.Text);
-                        valY = Convert.ToDouble(Settings.Default.OutTorque);
+                        valY = Convert.ToDouble(OutTorque);
                         series.Points.AddXY(valX,valY);
                         break;
                 }
-            series.LegendText = string.Format("Wind speed = {0} m/s", Settings.Default.WindSpeed);
+            series.LegendText = string.Format("Wind speed = {0} m/s", WindSpeed);
             if (chart.Series.Contains(series))
                 chart.Series[series.Name] = series;
             else
@@ -77,9 +83,9 @@ namespace MeasureComplexInterface
         void SetComLists()
         {
             var ports = SerialPort.GetPortNames();
-            comboBoxAmpCOM.DataSource = ports;
-            comboBoxVoltCOM.DataSource = ports;
-            comboBoxPSCOM.DataSource = ports;
+            comboBoxAmpCOM.DataSource = SerialPort.GetPortNames();
+            comboBoxVoltCOM.DataSource = SerialPort.GetPortNames();
+            comboBoxPSCOM.DataSource = SerialPort.GetPortNames();
         }
 
         private void buttonShowChart_Click(object sender, EventArgs e)
@@ -92,8 +98,7 @@ namespace MeasureComplexInterface
         {
             if (!InProcess)
             {
-                InitDevices();
-                buttonStart.Text = "Stop";
+                buttonStart.Text = "Стоп";
                 LogStart = DateTime.Now;
                 PerfHistory.Clear();
                 tmr.Enabled = true;           
@@ -101,26 +106,28 @@ namespace MeasureComplexInterface
             else
             {
                 tmr.Enabled = false;
-                buttonStart.Text = "Start";
+                buttonStart.Text = "Пуск";
             }
+            InitDevices();
             InProcess = !InProcess;
             DatabaseConnect dconn = new DatabaseConnect();
             dconn.UpdateRotorInfo(new string[]
             {
-                Settings.Default.RotorType,
-                Settings.Default.VaneWidth,
-                Settings.Default.VaneHeight,
-                Settings.Default.RotorDiameter,
-                Settings.Default.RotorProfile
+                comboBoxRotorType.Text,
+                textBoxVaneWidth.Text,
+                textBoxVaneHeight.Text,
+                textBoxTurbineDiameter.Text,
+                "3",
             });
+            
         }
 
         private void InitDevices()
         {
             TachoData = new ScriptData("../../../../tacho_read.py", string.Empty);
-            WE2107Data = new ScriptData("../../../../serial_read.py", comboBoxPSCOM.SelectedText);
-            AmpData = new ScriptData("../../../../ut61b.py", comboBoxAmpCOM.SelectedText);
-            VoltData = new ScriptData("../../../../ut61b.py", comboBoxVoltCOM.SelectedText);
+            WE2107Data = new ScriptData("../../../../serial_read.py", comboBoxPSCOM.SelectedItem.ToString());
+            AmpData = new ScriptData("../../../../ut61b.py", comboBoxAmpCOM.SelectedItem.ToString());
+            VoltData = new ScriptData("../../../../ut61b.py", comboBoxVoltCOM.SelectedItem.ToString());
         }
 
         private void Tmr_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -151,7 +158,7 @@ namespace MeasureComplexInterface
                 outPower.Invoke(new MethodInvoker(() => outPower.Text = Calculate("power")));
                 outTorque.Invoke(new MethodInvoker(() => outTorque.Text = Calculate("torque")));
 
-                Thread.Sleep(Convert.ToInt32(Settings.Default.SamplingRate * 1000));
+                Thread.Sleep(Convert.ToInt32(1 * 1000));
                 GetData(DateTime.Now, ++tick);
             }
         }
@@ -164,7 +171,7 @@ namespace MeasureComplexInterface
             ProcessStartInfo start = new ProcessStartInfo
             {
                 FileName = ScriptData.PythonPath,
-                Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, string.Concat(outAmperage.Text,outPS.Text,Settings.Default.RotorDiameter)),
+                Arguments = string.Format("\"{0}\" \"{1}\"", ScriptPath, string.Concat(outAmperage.Text,outPS.Text, RotorDiameter)),
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
@@ -195,7 +202,9 @@ namespace MeasureComplexInterface
 
         private void button2_Click(object sender, EventArgs e)
         {
+            InProcess = true;
             GetData(DateTime.Now, 0);
+            InProcess = false;
             MessageBox.Show("Labels updated!");
         }
     }

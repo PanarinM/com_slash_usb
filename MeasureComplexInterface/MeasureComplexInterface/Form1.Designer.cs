@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxPSCOM = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -68,7 +68,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxRotorProfile = new System.Windows.Forms.ComboBox();
             this.textBoxTurbineDiameter = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxVaneHeight = new System.Windows.Forms.TextBox();
@@ -144,12 +144,10 @@
             // 
             // textBoxWindSpeed
             // 
-            this.textBoxWindSpeed.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "WindSpeed", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBoxWindSpeed.Location = new System.Drawing.Point(163, 127);
             this.textBoxWindSpeed.Name = "textBoxWindSpeed";
             this.textBoxWindSpeed.Size = new System.Drawing.Size(74, 20);
             this.textBoxWindSpeed.TabIndex = 17;
-            this.textBoxWindSpeed.Text = global::MeasureComplexInterface.Properties.Settings.Default.WindSpeed;
             // 
             // label15
             // 
@@ -162,7 +160,6 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MeasureComplexInterface.Properties.Settings.Default, "SamplingRate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.numericUpDown1.Location = new System.Drawing.Point(163, 20);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1488,
@@ -177,7 +174,11 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
             this.numericUpDown1.TabIndex = 14;
-            this.numericUpDown1.Value = global::MeasureComplexInterface.Properties.Settings.Default.SamplingRate;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // comboBoxVoltCOM
             // 
@@ -254,16 +255,16 @@
             // 
             // chart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart.Legends.Add(legend3);
+            chartArea2.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart.Series.Add(series2);
             this.chart.Size = new System.Drawing.Size(577, 350);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart1";
@@ -296,12 +297,10 @@
             // outVoltage
             // 
             this.outVoltage.AutoSize = true;
-            this.outVoltage.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutWE2107", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outVoltage.Location = new System.Drawing.Point(156, 52);
             this.outVoltage.Name = "outVoltage";
-            this.outVoltage.Size = new System.Drawing.Size(13, 13);
+            this.outVoltage.Size = new System.Drawing.Size(0, 13);
             this.outVoltage.TabIndex = 21;
-            this.outVoltage.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutWE2107;
             // 
             // label18
             // 
@@ -315,12 +314,10 @@
             // outPerfRate
             // 
             this.outPerfRate.AutoSize = true;
-            this.outPerfRate.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "Performance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outPerfRate.Location = new System.Drawing.Point(547, 35);
             this.outPerfRate.Name = "outPerfRate";
             this.outPerfRate.Size = new System.Drawing.Size(0, 13);
             this.outPerfRate.TabIndex = 19;
-            this.outPerfRate.Text = global::MeasureComplexInterface.Properties.Settings.Default.Performance;
             // 
             // label7
             // 
@@ -334,12 +331,10 @@
             // outDT
             // 
             this.outDT.AutoSize = true;
-            this.outDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutCurrentTime", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outDT.Location = new System.Drawing.Point(547, 16);
             this.outDT.Name = "outDT";
             this.outDT.Size = new System.Drawing.Size(0, 13);
             this.outDT.TabIndex = 17;
-            this.outDT.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutCurrentTime;
             // 
             // label5
             // 
@@ -353,22 +348,18 @@
             // outTorque
             // 
             this.outTorque.AutoSize = true;
-            this.outTorque.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutTorque", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outTorque.Location = new System.Drawing.Point(381, 35);
             this.outTorque.Name = "outTorque";
             this.outTorque.Size = new System.Drawing.Size(0, 13);
             this.outTorque.TabIndex = 15;
-            this.outTorque.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutTorque;
             // 
             // outPower
             // 
             this.outPower.AutoSize = true;
-            this.outPower.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutRotorPower", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outPower.Location = new System.Drawing.Point(382, 16);
             this.outPower.Name = "outPower";
             this.outPower.Size = new System.Drawing.Size(0, 13);
             this.outPower.TabIndex = 14;
-            this.outPower.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutRotorPower;
             // 
             // label14
             // 
@@ -391,12 +382,10 @@
             // outPS
             // 
             this.outPS.AutoSize = true;
-            this.outPS.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutWE2107", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outPS.Location = new System.Drawing.Point(156, 71);
             this.outPS.Name = "outPS";
-            this.outPS.Size = new System.Drawing.Size(13, 13);
+            this.outPS.Size = new System.Drawing.Size(0, 13);
             this.outPS.TabIndex = 11;
-            this.outPS.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutWE2107;
             // 
             // label11
             // 
@@ -410,22 +399,18 @@
             // outTacho
             // 
             this.outTacho.AutoSize = true;
-            this.outTacho.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutUT372", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outTacho.Location = new System.Drawing.Point(156, 16);
             this.outTacho.Name = "outTacho";
-            this.outTacho.Size = new System.Drawing.Size(13, 13);
+            this.outTacho.Size = new System.Drawing.Size(0, 13);
             this.outTacho.TabIndex = 7;
-            this.outTacho.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutUT372;
             // 
             // outAmperage
             // 
             this.outAmperage.AutoSize = true;
-            this.outAmperage.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "OutUT61b", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.outAmperage.Location = new System.Drawing.Point(156, 35);
             this.outAmperage.Name = "outAmperage";
-            this.outAmperage.Size = new System.Drawing.Size(13, 13);
+            this.outAmperage.Size = new System.Drawing.Size(0, 13);
             this.outAmperage.TabIndex = 9;
-            this.outAmperage.Text = global::MeasureComplexInterface.Properties.Settings.Default.OutUT61b;
             // 
             // label3
             // 
@@ -457,7 +442,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.comboBox1);
+            this.groupBox4.Controls.Add(this.comboBoxRotorProfile);
             this.groupBox4.Controls.Add(this.textBoxTurbineDiameter);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.textBoxVaneHeight);
@@ -482,28 +467,24 @@
             this.label12.TabIndex = 10;
             this.label12.Text = "Профиль ротора:";
             // 
-            // comboBox1
+            // comboBoxRotorProfile
             // 
-            this.comboBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorProfile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBoxRotorProfile.FormattingEnabled = true;
+            this.comboBoxRotorProfile.Items.AddRange(new object[] {
             "Дарье",
             "Савониуса",
             "Комбинированный"});
-            this.comboBox1.Location = new System.Drawing.Point(124, 46);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(103, 21);
-            this.comboBox1.TabIndex = 9;
-            this.comboBox1.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorProfile;
+            this.comboBoxRotorProfile.Location = new System.Drawing.Point(124, 46);
+            this.comboBoxRotorProfile.Name = "comboBoxRotorProfile";
+            this.comboBoxRotorProfile.Size = new System.Drawing.Size(103, 21);
+            this.comboBoxRotorProfile.TabIndex = 9;
             // 
             // textBoxTurbineDiameter
             // 
-            this.textBoxTurbineDiameter.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorDiameter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBoxTurbineDiameter.Location = new System.Drawing.Point(124, 125);
             this.textBoxTurbineDiameter.Name = "textBoxTurbineDiameter";
             this.textBoxTurbineDiameter.Size = new System.Drawing.Size(103, 20);
             this.textBoxTurbineDiameter.TabIndex = 8;
-            this.textBoxTurbineDiameter.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorDiameter;
             // 
             // label10
             // 
@@ -516,16 +497,13 @@
             // 
             // textBoxVaneHeight
             // 
-            this.textBoxVaneHeight.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "VaneHeight", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBoxVaneHeight.Location = new System.Drawing.Point(124, 99);
             this.textBoxVaneHeight.Name = "textBoxVaneHeight";
             this.textBoxVaneHeight.Size = new System.Drawing.Size(103, 20);
             this.textBoxVaneHeight.TabIndex = 6;
-            this.textBoxVaneHeight.Text = global::MeasureComplexInterface.Properties.Settings.Default.VaneHeight;
             // 
             // comboBoxRotorType
             // 
-            this.comboBoxRotorType.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "RotorType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.comboBoxRotorType.FormattingEnabled = true;
             this.comboBoxRotorType.Items.AddRange(new object[] {
             "Дарье",
@@ -535,16 +513,13 @@
             this.comboBoxRotorType.Name = "comboBoxRotorType";
             this.comboBoxRotorType.Size = new System.Drawing.Size(103, 21);
             this.comboBoxRotorType.TabIndex = 2;
-            this.comboBoxRotorType.Text = global::MeasureComplexInterface.Properties.Settings.Default.RotorType;
             // 
             // textBoxVaneWidth
             // 
-            this.textBoxVaneWidth.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MeasureComplexInterface.Properties.Settings.Default, "VaneWidth", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBoxVaneWidth.Location = new System.Drawing.Point(124, 73);
             this.textBoxVaneWidth.Name = "textBoxVaneWidth";
             this.textBoxVaneWidth.Size = new System.Drawing.Size(103, 20);
             this.textBoxVaneWidth.TabIndex = 4;
-            this.textBoxVaneWidth.Text = global::MeasureComplexInterface.Properties.Settings.Default.VaneWidth;
             // 
             // groupBox2
             // 
@@ -656,7 +631,7 @@
         private System.Windows.Forms.Label outPerfRate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxRotorProfile;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBoxWindSpeed;
         private System.Windows.Forms.Label label15;
