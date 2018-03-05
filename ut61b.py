@@ -209,7 +209,7 @@ class UT61B(object):
 
         res = "{}{} {} {}".format(
             BYTE_0[raw_data[0]],
-            val,
+            round(val, 2),
             BYTE_9[raw_data[9]],
             BYTE_10[raw_data[10]],
         )
