@@ -84,10 +84,7 @@ class ut372device(object):
         except ValueError:
             count = float(''.join(list(reversed(count))))
             mes_unit = 'rpm'
-        time = datetime.now()
-        # time = time.strftime('%d-%m-%Y %H:%M:%S')
-        time = str(time)
-        output = mes_unit, count, time
+        output = mes_unit, count
         self.lst.clear()
         return output
 
@@ -130,7 +127,7 @@ class ut372device(object):
             if self.data is not None:
                 return self.data
             else:
-                return '', '', ''
+                return '', ''
         else:
             raise DeviceIsNotConnected('Device was unplugged')
 
