@@ -101,10 +101,10 @@ BYTE_9 = {
     0x2: '%',
     0x4: 'diode',
     0x8: 'beep',
-    0x10: 'mega',
-    0x20: 'kilo',
-    0x40: 'milli',
-    0x80: 'micro',
+    0x10: 'M',
+    0x20: 'k',
+    0x40: 'm',
+    0x80: 'u',
     0: 'false'
 }
 
@@ -121,11 +121,11 @@ BYTE_10 = {
     0x1: 'fahrenheit',
     0x2: 'degree',
     0x4: 'farad',
-    0x8: 'hertz',
+    0x8: 'Hz',
     0x10: 'HFE',
-    0x20: 'OHM',
-    0x40: 'ampere',
-    0x80: 'volt',
+    0x20: 'Ohm',
+    0x40: 'A',
+    0x80: 'V',
     0: 'false'
 }
 
@@ -207,10 +207,9 @@ class UT61B(object):
             val = val * 10 + digit
         val *= BYTE_6[raw_data[6]]
 
-        res = "{}{} {} {} {}".format(
+        res = "{}{} {} {}".format(
             BYTE_0[raw_data[0]],
             val,
-            BYTE_8[raw_data[8]],
             BYTE_9[raw_data[9]],
             BYTE_10[raw_data[10]],
         )
