@@ -135,8 +135,8 @@ class ut372device(object):
 if __name__ == '__main__':
     try:
         ourdevice = ut372device()
-        data = ('', '', '')
-        while data[2] == '':
+        data = ('', '')
+        while data[1] == '':
             data = ourdevice.receive_package()
         stdout.write(' '.join((str(x) for x in data)))
     except DeviceIsNotConnected:
