@@ -38,7 +38,7 @@ READ_RETRIES = 3
 BYTE_0 = {
     0x2b: '+',
     0x2d: '-',
-    0: 'false',
+    0: '',
 }
 
 # Bytes containing digits
@@ -62,7 +62,7 @@ BYTE_6 = {
     0x32: 0.01,
     0x34: 0.1,
     0x30: 1,
-    0: 'false',
+    0: '',
 }
 
 # BYTE 7  Settings/ Pressend Buttons/ Binary flags, can be combined
@@ -86,7 +86,7 @@ BYTE_8 = {
     0x8: 'auto power off',
     0x10: 'min',
     0x20: 'max',
-    0: 'false'
+    0: ''
 }
 
 # BYTE 9 Unit prefix
@@ -105,7 +105,7 @@ BYTE_9 = {
     0x20: 'k',
     0x40: 'm',
     0x80: 'u',
-    0: 'false'
+    0: ''
 }
 
 # BYTE 10 Unit
@@ -126,7 +126,7 @@ BYTE_10 = {
     0x20: 'Ohm',
     0x40: 'A',
     0x80: 'V',
-    0: 'false'
+    0: ''
 }
 
 """
