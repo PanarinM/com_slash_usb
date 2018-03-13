@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBoxPSCOM = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -113,7 +113,7 @@
             this.comboBoxPSCOM.Location = new System.Drawing.Point(163, 45);
             this.comboBoxPSCOM.Name = "comboBoxPSCOM";
             this.comboBoxPSCOM.Size = new System.Drawing.Size(74, 21);
-            this.comboBoxPSCOM.TabIndex = 19;
+            this.comboBoxPSCOM.TabIndex = 2;
             // 
             // button2
             // 
@@ -173,7 +173,7 @@
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown1.TabIndex = 14;
+            this.numericUpDown1.TabIndex = 1;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
             0,
@@ -255,16 +255,16 @@
             // 
             // chart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart.Series.Add(series1);
             this.chart.Size = new System.Drawing.Size(577, 350);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart1";
@@ -314,7 +314,7 @@
             // outPerfRate
             // 
             this.outPerfRate.AutoSize = true;
-            this.outPerfRate.Location = new System.Drawing.Point(547, 35);
+            this.outPerfRate.Location = new System.Drawing.Point(505, 35);
             this.outPerfRate.Name = "outPerfRate";
             this.outPerfRate.Size = new System.Drawing.Size(0, 13);
             this.outPerfRate.TabIndex = 19;
@@ -322,7 +322,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(423, 35);
+            this.label7.Location = new System.Drawing.Point(381, 35);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(118, 13);
             this.label7.TabIndex = 18;
@@ -331,7 +331,7 @@
             // outDT
             // 
             this.outDT.AutoSize = true;
-            this.outDT.Location = new System.Drawing.Point(547, 16);
+            this.outDT.Location = new System.Drawing.Point(505, 16);
             this.outDT.Name = "outDT";
             this.outDT.Size = new System.Drawing.Size(0, 13);
             this.outDT.TabIndex = 17;
@@ -339,7 +339,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(423, 16);
+            this.label5.Location = new System.Drawing.Point(381, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(87, 13);
             this.label5.TabIndex = 16;
@@ -348,7 +348,7 @@
             // outTorque
             // 
             this.outTorque.AutoSize = true;
-            this.outTorque.Location = new System.Drawing.Point(381, 35);
+            this.outTorque.Location = new System.Drawing.Point(325, 35);
             this.outTorque.Name = "outTorque";
             this.outTorque.Size = new System.Drawing.Size(0, 13);
             this.outTorque.TabIndex = 15;
@@ -356,7 +356,7 @@
             // outPower
             // 
             this.outPower.AutoSize = true;
-            this.outPower.Location = new System.Drawing.Point(382, 16);
+            this.outPower.Location = new System.Drawing.Point(325, 16);
             this.outPower.Name = "outPower";
             this.outPower.Size = new System.Drawing.Size(0, 13);
             this.outPower.TabIndex = 14;
@@ -364,7 +364,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(280, 35);
+            this.label14.Location = new System.Drawing.Point(215, 35);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(98, 13);
             this.label14.TabIndex = 13;
@@ -373,7 +373,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(280, 16);
+            this.label13.Location = new System.Drawing.Point(215, 16);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(98, 13);
             this.label13.TabIndex = 12;

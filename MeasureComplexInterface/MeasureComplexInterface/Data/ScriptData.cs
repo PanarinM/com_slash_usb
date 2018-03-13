@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MeasureComplexInterface
 {
@@ -33,6 +35,7 @@ namespace MeasureComplexInterface
             {
                 using (StreamReader reader = process.StandardOutput)
                 {
+                   
                     string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
                     Response = reader.ReadToEnd(); 
                 }
